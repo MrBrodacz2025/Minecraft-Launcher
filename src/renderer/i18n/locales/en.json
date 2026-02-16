@@ -1,0 +1,169 @@
+{
+  "meta": {
+    "name": "English",
+    "code": "en",
+    "author": "Mr_Brodacz Team"
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "reset": "Reset",
+    "close": "Close",
+    "confirm": "Confirm",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Information",
+    "yes": "Yes",
+    "no": "No",
+    "search": "Search",
+    "download": "Download",
+    "install": "Install",
+    "uninstall": "Uninstall",
+    "update": "Update",
+    "version": "Version",
+    "all": "All"
+  },
+  "sidebar": {
+    "home": "Home",
+    "mods": "Mods",
+    "settings": "Settings",
+    "console": "Console"
+  },
+  "titleBar": {
+    "notifications": "Notifications",
+    "changeAccount": "Change account",
+    "logout": "Log out"
+  },
+  "home": {
+    "welcome": "Welcome",
+    "welcomeBack": "Welcome back",
+    "loginToPlay": "Log in to play",
+    "loginButton": "Login with Microsoft",
+    "play": "Play",
+    "playing": "Playing...",
+    "selectVersion": "Select version",
+    "installedVersions": "Installed versions",
+    "availableVersions": "Available versions",
+    "noVersionsInstalled": "No versions installed",
+    "installVersion": "Install version",
+    "releases": "Releases",
+    "snapshots": "Snapshots",
+    "loaders": "Loaders",
+    "noLoadersAvailable": "No loaders available",
+    "serverStatus": "Server Status"
+  },
+  "mods": {
+    "title": "Mods",
+    "searchPlaceholder": "Search mods...",
+    "installedMods": "Installed Mods",
+    "browseMods": "Browse Mods",
+    "noModsInstalled": "No mods installed",
+    "source": "Source",
+    "downloads": "Downloads",
+    "lastUpdated": "Last updated",
+    "dependencies": "Dependencies",
+    "gameVersion": "Game version",
+    "modLoader": "Mod Loader",
+    "filterByLoader": "Filter by loader",
+    "filterByVersion": "Filter by version",
+    "sortBy": "Sort by",
+    "sortRelevance": "Relevance",
+    "sortDownloads": "Downloads",
+    "sortUpdated": "Date updated",
+    "sortName": "Name"
+  },
+  "settings": {
+    "title": "Settings",
+    "saved": "Settings saved",
+    "saveFailed": "Failed to save settings",
+    "game": {
+      "title": "Game Settings",
+      "description": "Resolution and window mode",
+      "resolution": "Resolution",
+      "width": "Width",
+      "height": "Height",
+      "windowMode": "Window Mode",
+      "windowed": "Windowed",
+      "fullscreen": "Fullscreen"
+    },
+    "memory": {
+      "title": "RAM Memory",
+      "description": "Available: {total} GB, recommended: {recommended} GB",
+      "minimum": "Minimum RAM (MB)",
+      "maximum": "Maximum RAM (MB)",
+      "hint": "It is recommended to allocate 25-50% of available RAM. Too much memory can cause performance issues."
+    },
+    "paths": {
+      "title": "Paths",
+      "description": "Game file locations",
+      "gameFolder": "Game folder",
+      "javaPath": "Java path (optional)",
+      "browse": "Browse",
+      "autoDetect": "Auto-detect"
+    },
+    "launcher": {
+      "title": "Launcher",
+      "description": "Launcher options",
+      "closeOnLaunch": "Close launcher on game start",
+      "showSnapshots": "Show snapshots",
+      "autoUpdate": "Auto-update",
+      "checkLoaderUpdates": "Check loader updates",
+      "loaderCheckInterval": "Check interval (minutes)"
+    },
+    "appearance": {
+      "title": "Appearance",
+      "description": "Launcher customization",
+      "language": "Language",
+      "theme": "Theme",
+      "themeDark": "Dark",
+      "themeLight": "Light",
+      "accentColor": "Accent color",
+      "selectColor": "Select color"
+    },
+    "jvm": {
+      "title": "JVM Arguments",
+      "description": "Advanced Java options",
+      "arguments": "Arguments",
+      "hint": "Add custom JVM arguments separated by spaces"
+    },
+    "about": {
+      "title": "About",
+      "version": "Version",
+      "checkUpdates": "Check for updates",
+      "noUpdates": "No updates available",
+      "updateAvailable": "Update available"
+    }
+  },
+  "auth": {
+    "loginRequired": "Login required",
+    "loginDescription": "Log in with Microsoft account to play Minecraft",
+    "loggingIn": "Logging in...",
+    "loginSuccess": "Logged in successfully",
+    "loginFailed": "Login failed",
+    "logoutSuccess": "Logged out successfully",
+    "sessionExpired": "Session expired, please log in again"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "noNotifications": "No notifications",
+    "markAllRead": "Mark all as read",
+    "clearAll": "Clear all"
+  },
+  "console": {
+    "title": "Console",
+    "clear": "Clear",
+    "copy": "Copy",
+    "noLogs": "No logs"
+  },
+  "errors": {
+    "general": "An unexpected error occurred",
+    "network": "Network connection error",
+    "downloadFailed": "Download failed",
+    "installFailed": "Installation failed",
+    "launchFailed": "Failed to launch game",
+    "javaNotFound": "Java not found",
+    "invalidVersion": "Invalid version"
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "meta": {
+    "name": "Polski",
+    "code": "pl",
+    "author": "Mr_Brodacz Team"
+  },
+  "common": {
+    "loading": "Ładowanie...",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "reset": "Resetuj",
+    "close": "Zamknij",
+    "confirm": "Potwierdź",
+    "error": "Błąd",
+    "success": "Sukces",
+    "warning": "Ostrzeżenie",
+    "info": "Informacja",
+    "yes": "Tak",
+    "no": "Nie",
+    "search": "Szukaj",
+    "download": "Pobierz",
+    "install": "Zainstaluj",
+    "uninstall": "Odinstaluj",
+    "update": "Aktualizuj",
+    "version": "Wersja",
+    "all": "Wszystkie"
+  },
+  "sidebar": {
+    "home": "Główna",
+    "mods": "Mody",
+    "settings": "Ustawienia",
+    "console": "Konsola"
+  },
+  "titleBar": {
+    "notifications": "Powiadomienia",
+    "changeAccount": "Zmień konto",
+    "logout": "Wyloguj się"
+  },
+  "home": {
+    "welcome": "Witaj",
+    "welcomeBack": "Witaj ponownie",
+    "loginToPlay": "Zaloguj się, aby grać",
+    "loginButton": "Zaloguj przez Microsoft",
+    "play": "Graj",
+    "playing": "Grasz...",
+    "selectVersion": "Wybierz wersję",
+    "installedVersions": "Zainstalowane wersje",
+    "availableVersions": "Dostępne wersje",
+    "noVersionsInstalled": "Brak zainstalowanych wersji",
+    "installVersion": "Zainstaluj wersję",
+    "releases": "Wydania",
+    "snapshots": "Snapshoty",
+    "loaders": "Loadery",
+    "noLoadersAvailable": "Brak dostępnych loaderów",
+    "serverStatus": "Status serwerów"
+  },
+  "mods": {
+    "title": "Mody",
+    "searchPlaceholder": "Szukaj modów...",
+    "installedMods": "Zainstalowane mody",
+    "browseMods": "Przeglądaj mody",
+    "noModsInstalled": "Brak zainstalowanych modów",
+    "source": "Źródło",
+    "downloads": "Pobrania",
+    "lastUpdated": "Ostatnia aktualizacja",
+    "dependencies": "Zależności",
+    "gameVersion": "Wersja gry",
+    "modLoader": "Loader",
+    "filterByLoader": "Filtruj po loaderze",
+    "filterByVersion": "Filtruj po wersji",
+    "sortBy": "Sortuj po",
+    "sortRelevance": "Trafność",
+    "sortDownloads": "Pobrania",
+    "sortUpdated": "Data aktualizacji",
+    "sortName": "Nazwa"
+  },
+  "settings": {
+    "title": "Ustawienia",
+    "saved": "Ustawienia zostały zapisane",
+    "saveFailed": "Nie udało się zapisać ustawień",
+    "game": {
+      "title": "Ustawienia gry",
+      "description": "Rozdzielczość i tryb okna",
+      "resolution": "Rozdzielczość",
+      "width": "Szerokość",
+      "height": "Wysokość",
+      "windowMode": "Tryb okna",
+      "windowed": "Okno",
+      "fullscreen": "Pełny ekran"
+    },
+    "memory": {
+      "title": "Pamięć RAM",
+      "description": "Dostępne: {total} GB, zalecane: {recommended} GB",
+      "minimum": "Minimum RAM (MB)",
+      "maximum": "Maximum RAM (MB)",
+      "hint": "Zalecane jest przydzielenie 25-50% dostępnej pamięci RAM. Zbyt dużo pamięci może spowodować problemy z wydajnością."
+    },
+    "paths": {
+      "title": "Lokalizacje",
+      "description": "Ścieżki do plików gry",
+      "gameFolder": "Folder gry",
+      "javaPath": "Ścieżka Java (opcjonalnie)",
+      "browse": "Przeglądaj",
+      "autoDetect": "Auto-wykrywanie"
+    },
+    "launcher": {
+      "title": "Launcher",
+      "description": "Opcje launchera",
+      "closeOnLaunch": "Zamknij launcher po uruchomieniu gry",
+      "showSnapshots": "Pokaż snapshoty",
+      "autoUpdate": "Automatyczne aktualizacje",
+      "checkLoaderUpdates": "Sprawdzaj aktualizacje loaderów",
+      "loaderCheckInterval": "Interwał sprawdzania (minuty)"
+    },
+    "appearance": {
+      "title": "Wygląd",
+      "description": "Personalizacja launchera",
+      "language": "Język",
+      "theme": "Motyw",
+      "themeDark": "Ciemny",
+      "themeLight": "Jasny",
+      "accentColor": "Kolor akcentu",
+      "selectColor": "Wybierz kolor"
+    },
+    "jvm": {
+      "title": "Argumenty JVM",
+      "description": "Zaawansowane opcje Java",
+      "arguments": "Argumenty",
+      "hint": "Dodaj własne argumenty JVM rozdzielone spacjami"
+    },
+    "about": {
+      "title": "O aplikacji",
+      "version": "Wersja",
+      "checkUpdates": "Sprawdź aktualizacje",
+      "noUpdates": "Brak dostępnych aktualizacji",
+      "updateAvailable": "Dostępna aktualizacja"
+    }
+  },
+  "auth": {
+    "loginRequired": "Wymagane logowanie",
+    "loginDescription": "Zaloguj się kontem Microsoft, aby grać w Minecraft",
+    "loggingIn": "Logowanie...",
+    "loginSuccess": "Zalogowano pomyślnie",
+    "loginFailed": "Logowanie nie powiodło się",
+    "logoutSuccess": "Wylogowano pomyślnie",
+    "sessionExpired": "Sesja wygasła, zaloguj się ponownie"
+  },
+  "notifications": {
+    "title": "Powiadomienia",
+    "noNotifications": "Brak powiadomień",
+    "markAllRead": "Oznacz wszystkie jako przeczytane",
+    "clearAll": "Wyczyść wszystkie"
+  },
+  "console": {
+    "title": "Konsola",
+    "clear": "Wyczyść",
+    "copy": "Kopiuj",
+    "noLogs": "Brak logów"
+  },
+  "errors": {
+    "general": "Wystąpił nieoczekiwany błąd",
+    "network": "Błąd połączenia sieciowego",
+    "downloadFailed": "Pobieranie nie powiodło się",
+    "installFailed": "Instalacja nie powiodła się",
+    "launchFailed": "Uruchomienie gry nie powiodło się",
+    "javaNotFound": "Nie znaleziono Java",
+    "invalidVersion": "Nieprawidłowa wersja"
+  }
+}

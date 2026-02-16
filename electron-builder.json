@@ -1,0 +1,143 @@
+{
+  "appId": "com.minecraft.launcher",
+  "productName": "Minecraft Launcher",
+  "copyright": "Copyright © 2024-2026",
+  "asar": true,
+  "asarUnpack": [
+    "node_modules/msmc/**/*"
+  ],
+  "directories": {
+    "output": "dist-build",
+    "buildResources": "build"
+  },
+  "files": [
+    "dist/main/**/*",
+    "dist/renderer/**/*",
+    "package.json"
+  ],
+  "extraResources": [
+    {
+      "from": "assets",
+      "to": "assets",
+      "filter": ["**/*"]
+    }
+  ],
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64", "ia32"]
+      },
+      {
+        "target": "portable",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": "build/icon.ico",
+    "publisherName": "Minecraft Launcher",
+    "artifactName": "${productName}-Setup-${version}.${ext}",
+    "signAndEditExecutable": false
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "allowElevation": true,
+    "installerIcon": "build/icon.ico",
+    "uninstallerIcon": "build/icon.ico",
+    "installerHeaderIcon": "build/icon.ico",
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "Minecraft Launcher",
+    "perMachine": false,
+    "runAfterFinish": true,
+    "deleteAppDataOnUninstall": false,
+    "license": "LICENSE",
+    "installerLanguages": ["pl", "en"]
+  },
+  "mac": {
+    "target": [
+      {
+        "target": "dmg",
+        "arch": ["x64", "arm64"]
+      },
+      {
+        "target": "zip",
+        "arch": ["x64", "arm64"]
+      }
+    ],
+    "icon": "build/icon.icns",
+    "category": "public.app-category.games",
+    "artifactName": "${productName}-${version}-${arch}.${ext}",
+    "hardenedRuntime": true,
+    "gatekeeperAssess": false,
+    "entitlements": "build/entitlements.mac.plist",
+    "entitlementsInherit": "build/entitlements.mac.plist",
+    "darkModeSupport": true
+  },
+  "dmg": {
+    "title": "${productName} ${version}",
+    "icon": "build/icon.icns",
+    "contents": [
+      {
+        "x": 130,
+        "y": 220
+      },
+      {
+        "x": 410,
+        "y": 220,
+        "type": "link",
+        "path": "/Applications"
+      }
+    ],
+    "window": {
+      "width": 540,
+      "height": 380
+    }
+  },
+  "linux": {
+    "target": [
+      {
+        "target": "AppImage",
+        "arch": ["x64"]
+      },
+      {
+        "target": "deb",
+        "arch": ["x64"]
+      },
+      {
+        "target": "rpm",
+        "arch": ["x64"]
+      },
+      {
+        "target": "tar.gz",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": "build/icons",
+    "category": "Game",
+    "artifactName": "${productName}-${version}-${arch}.${ext}",
+    "synopsis": "Nieoficjalny launcher do Minecraft",
+    "description": "Nowoczesny launcher do Minecraft Java Edition z obsługą Fabric, Forge, NeoForge i modów",
+    "desktop": {
+      "Name": "Minecraft Launcher",
+      "Comment": "Minecraft Java Edition Launcher",
+      "Categories": "Game;ActionGame",
+      "StartupWMClass": "minecraft-launcher"
+    }
+  },
+  "appImage": {
+    "artifactName": "${productName}-${version}.${ext}",
+    "license": "LICENSE"
+  },
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "your-github-username",
+      "repo": "minecraft-launcher",
+      "releaseType": "release",
+      "publishAutoUpdate": true
+    }
+  ],
+  "afterSign": "scripts/notarize.js",
+  "beforeBuild": "scripts/before-build.js"
+}

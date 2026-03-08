@@ -108,6 +108,9 @@
     "launching": "Uruchamianie {name}...",
     "launchFailed": "Nie udało się uruchomić paczki {name}",
     "versionNotInstalled": "Wersja Minecraft {version} nie jest zainstalowana. Zainstaluj ją najpierw na stronie głównej.",
+    "autoInstalling": "Automatyczna instalacja Minecraft {version}...",
+    "autoInstallSuccess": "Minecraft {version} zainstalowany pomyślnie",
+    "autoInstallFailed": "Nie udało się automatycznie zainstalować Minecraft {version}",
     "loginRequired": "Zaloguj się, aby uruchomić paczkę modów"
   },
   "settings": {

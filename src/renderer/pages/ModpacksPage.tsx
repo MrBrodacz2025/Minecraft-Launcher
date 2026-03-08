@@ -221,6 +221,20 @@ const ModpacksPage: React.FC<ModpacksPageProps> = ({ settings, profile }) => {
 
     setLaunchingModpackId(modpack.id);
     try {
+      // Check if the base Minecraft version is installed, auto-install if missing
+      const installedVersions: string[] = await api.versions.getInstalled();
+      if (!installedVersions.includes(modpack.gameVersion)) {
+        toast.loading(t('modpacks.autoInstalling', { version: modpack.gameVersion }), { id: 'auto-install' });
+        try {
+          await api.versions.install(modpack.gameVersion);
+          toast.success(t('modpacks.autoInstallSuccess', { version: modpack.gameVersion }), { id: 'auto-install' });
+        } catch (installError: any) {
+          console.error('Auto-install failed:', installError);
+          toast.error(t('modpacks.autoInstallFailed', { version: modpack.gameVersion }), { id: 'auto-install' });
+          return;
+        }
+      }
+
       await api.launcher.launch({
         version: modpack.gameVersion,
         loader: modpack.loader !== 'vanilla' ? modpack.loader : undefined,

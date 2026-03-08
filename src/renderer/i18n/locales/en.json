@@ -108,6 +108,9 @@
     "launching": "Launching {name}...",
     "launchFailed": "Failed to launch modpack {name}",
     "versionNotInstalled": "Minecraft version {version} is not installed. Install it first from the home page.",
+    "autoInstalling": "Automatically installing Minecraft {version}...",
+    "autoInstallSuccess": "Minecraft {version} installed successfully",
+    "autoInstallFailed": "Failed to automatically install Minecraft {version}",
     "loginRequired": "Log in to launch a modpack"
   },
   "settings": {

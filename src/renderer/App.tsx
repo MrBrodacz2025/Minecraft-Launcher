@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar';
 import TitleBar from './components/TitleBar';
 import HomePage from './pages/HomePage';
 import ModsPage from './pages/ModsPage';
+import ModpacksPage from './pages/ModpacksPage';
 import SettingsPage from './pages/SettingsPage';
 import ConsolePanel from './components/ConsolePanel';
 import NotificationPanel from './components/NotificationPanel';
@@ -13,7 +14,7 @@ import { useNotifications } from './hooks/useNotifications';
 import { I18nProvider } from './i18n';
 import type { MinecraftProfile, LauncherSettings, Notification } from './types';
 
-type Page = 'home' | 'mods' | 'settings';
+type Page = 'home' | 'mods' | 'modpacks' | 'settings';
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -159,6 +160,19 @@ const App: React.FC = () => {
                   className="h-full"
                 >
                   <ModsPage settings={settings} />
+                </motion.div>
+              )}
+
+              {currentPage === 'modpacks' && (
+                <motion.div
+                  key="modpacks"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.2 }}
+                  className="h-full"
+                >
+                  <ModpacksPage settings={settings} />
                 </motion.div>
               )}
 

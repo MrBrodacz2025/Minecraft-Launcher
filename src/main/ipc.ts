@@ -6,6 +6,7 @@ import { AuthService } from '../services/AuthService';
 import { VersionManager } from '../services/VersionManager';
 import { LoaderManager } from '../loader-manager/LoaderManager';
 import { ModManager } from '../mod-manager/ModManager';
+import { ModpackManager } from '../mod-manager/ModpackManager';
 import { MinecraftLauncherService } from '../services/MinecraftLauncherService';
 import { SettingsService } from '../services/SettingsService';
 import { StatusService } from '../services/StatusService';
@@ -14,8 +15,11 @@ import { discordRPC } from '../services/DiscordRPCService';
 import type {
   LaunchConfig,
   ModSearchFilters,
+  ModpackSearchFilters,
   Mod,
   ModVersion,
+  Modpack,
+  ModpackFile,
   LoaderType,
   LauncherSettings,
 } from '../shared/types';
@@ -25,6 +29,7 @@ let authService: AuthService;
 let versionManager: VersionManager;
 let loaderManager: LoaderManager;
 let modManager: ModManager;
+let modpackManager: ModpackManager;
 let launcherService: MinecraftLauncherService;
 let settingsService: SettingsService;
 let statusService: StatusService;
@@ -36,6 +41,7 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
   versionManager = new VersionManager();
   loaderManager = new LoaderManager();
   modManager = new ModManager(settingsService);
+  modpackManager = new ModpackManager(settingsService);
   launcherService = new MinecraftLauncherService(mainWindow);
   statusService = new StatusService();
 
@@ -259,6 +265,95 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
       await modManager.activateModsForVersion(version);
     } catch (error) {
       log.error('Mods: Activate version failed', error);
+      throw error;
+    }
+  });
+
+  // ==================== MODPACKS ====================
+  ipcMain.handle(IPC_CHANNELS.MODPACKS_SEARCH, async (_event, query: string, filters: ModpackSearchFilters) => {
+    try {
+      return await modpackManager.searchModpacks(query, filters);
+    } catch (error) {
+      log.error('Modpacks: Search failed', error);
+      throw error;
+    }
+  });
+
+  ipcMain.handle(IPC_CHANNELS.MODPACKS_GET_DETAILS, async (_event, modpackId: string, source: 'curseforge' | 'modrinth') => {
+    try {
+      return await modpackManager.getModpackDetails(modpackId, source);
+    } catch (error) {
+      log.error('Modpacks: Get details failed', error);
+      throw error;
+    }
+  });
+
+  ipcMain.handle(IPC_CHANNELS.MODPACKS_GET_FILES, async (_event, modpackId: string, source: 'curseforge' | 'modrinth', gameVersion?: string) => {
+    try {
+      return await modpackManager.getModpackFiles(modpackId, source, gameVersion);
+    } catch (error) {
+      log.error('Modpacks: Get files failed', error);
+      throw error;
+    }
+  });
+
+  ipcMain.handle(IPC_CHANNELS.MODPACKS_INSTALL, async (_event, modpack: Modpack, file: ModpackFile) => {
+    try {
+      log.info(`Modpacks: Installing ${modpack.name}`);
+      await modpackManager.installModpack(modpack, file, (progress) => {
+        mainWindow.webContents.send(IPC_CHANNELS.DOWNLOAD_PROGRESS, progress);
+      });
+    } catch (error) {
+      log.error('Modpacks: Install failed', error);
+      throw error;
+    }
+  });
+
+  ipcMain.handle(IPC_CHANNELS.MODPACKS_UNINSTALL, async (_event, modpackId: string) => {
+    try {
+      log.info(`Modpacks: Uninstalling modpack ${modpackId}`);
+      await modpackManager.uninstallModpack(modpackId);
+    } catch (error) {
+      log.error('Modpacks: Uninstall failed', error);
+      throw error;
+    }
+  });
+
+  ipcMain.handle(IPC_CHANNELS.MODPACKS_GET_INSTALLED, async () => {
+    try {
+      return await modpackManager.getInstalledModpacks();
+    } catch (error) {
+      log.error('Modpacks: Get installed failed', error);
+      throw error;
+    }
+  });
+
+  ipcMain.handle(IPC_CHANNELS.MODPACKS_CHECK_UPDATES, async () => {
+    try {
+      return await modpackManager.checkForUpdates();
+    } catch (error) {
+      log.error('Modpacks: Check updates failed', error);
+      throw error;
+    }
+  });
+
+  ipcMain.handle(IPC_CHANNELS.MODPACKS_UPDATE, async (_event, modpackId: string) => {
+    try {
+      log.info(`Modpacks: Updating modpack ${modpackId}`);
+      await modpackManager.updateModpack(modpackId, (progress) => {
+        mainWindow.webContents.send(IPC_CHANNELS.DOWNLOAD_PROGRESS, progress);
+      });
+    } catch (error) {
+      log.error('Modpacks: Update failed', error);
+      throw error;
+    }
+  });
+
+  ipcMain.handle(IPC_CHANNELS.MODPACKS_SET_AUTO_UPDATE, async (_event, modpackId: string, enabled: boolean) => {
+    try {
+      await modpackManager.setAutoUpdate(modpackId, enabled);
+    } catch (error) {
+      log.error('Modpacks: Set auto update failed', error);
       throw error;
     }
   });

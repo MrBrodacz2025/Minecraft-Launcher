@@ -193,3 +193,56 @@ export interface ModConflict {
   mod2: InstalledMod;
   reason: string;
 }
+
+// Modpack Types
+export interface Modpack {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  author: string;
+  downloads: number;
+  iconUrl?: string;
+  categories: string[];
+  source: 'curseforge' | 'modrinth';
+  websiteUrl?: string;
+  latestFiles: ModpackFile[];
+}
+
+export interface ModpackFile {
+  id: string;
+  modpackId: string;
+  name: string;
+  versionNumber: string;
+  gameVersions: string[];
+  loaders: LoaderType[];
+  downloadUrl: string;
+  fileName: string;
+  fileSize: number;
+  releaseType: 'release' | 'beta' | 'alpha';
+  datePublished: string;
+}
+
+export interface InstalledModpack {
+  id: string;
+  name: string;
+  version: string;
+  fileId: string;
+  source: 'curseforge' | 'modrinth';
+  loader: LoaderType;
+  gameVersion: string;
+  installedAt: string;
+  installPath: string;
+  autoUpdate: boolean;
+  latestVersion?: string;
+  updateAvailable?: boolean;
+}
+
+export interface ModpackSearchFilters {
+  gameVersion?: string;
+  loader?: LoaderType;
+  source?: 'curseforge' | 'modrinth' | 'all';
+  sortBy?: 'relevance' | 'downloads' | 'updated' | 'newest';
+  page?: number;
+  pageSize?: number;
+}

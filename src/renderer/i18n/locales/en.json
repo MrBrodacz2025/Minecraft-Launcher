@@ -28,6 +28,7 @@
   "sidebar": {
     "home": "Home",
     "mods": "Mods",
+    "modpacks": "Modpacks",
     "settings": "Settings",
     "console": "Console"
   },
@@ -73,6 +74,35 @@
     "sortDownloads": "Downloads",
     "sortUpdated": "Date updated",
     "sortName": "Name"
+  },
+  "modpacks": {
+    "title": "Modpacks",
+    "browse": "Browse Modpacks",
+    "installed": "Installed",
+    "searchPlaceholder": "Search modpacks...",
+    "searchFailed": "Modpack search failed",
+    "searchHint": "Search for modpacks above",
+    "filters": "Filters",
+    "gameVersion": "Game version",
+    "loader": "Mod Loader",
+    "sortBy": "Sort by",
+    "noInstalled": "No modpacks installed",
+    "noFiles": "No files available",
+    "availableVersions": "Available versions",
+    "website": "Modpack page",
+    "installSuccess": "{name} has been installed",
+    "installFailed": "Failed to install {name}",
+    "uninstallSuccess": "Modpack has been uninstalled",
+    "uninstallFailed": "Failed to uninstall modpack",
+    "checkUpdates": "Check for updates",
+    "updatesFound": "{count} update(s) available",
+    "noUpdates": "All modpacks are up to date",
+    "checkUpdatesFailed": "Failed to check for updates",
+    "updateAvailable": "Update available",
+    "updateSuccess": "Modpack updated successfully",
+    "updateFailed": "Failed to update modpack",
+    "autoUpdateOn": "Auto-update enabled",
+    "autoUpdateOff": "Auto-update disabled"
   },
   "settings": {
     "title": "Settings",

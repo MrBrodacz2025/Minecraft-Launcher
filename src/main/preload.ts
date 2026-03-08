@@ -32,6 +32,17 @@ const IPC_CHANNELS = {
   MODS_ORGANIZE: 'mods:organize',
   MODS_ACTIVATE_VERSION: 'mods:activateVersion',
 
+  // Modpacks
+  MODPACKS_SEARCH: 'modpacks:search',
+  MODPACKS_GET_DETAILS: 'modpacks:getDetails',
+  MODPACKS_GET_FILES: 'modpacks:getFiles',
+  MODPACKS_INSTALL: 'modpacks:install',
+  MODPACKS_UNINSTALL: 'modpacks:uninstall',
+  MODPACKS_GET_INSTALLED: 'modpacks:getInstalled',
+  MODPACKS_CHECK_UPDATES: 'modpacks:checkUpdates',
+  MODPACKS_UPDATE: 'modpacks:update',
+  MODPACKS_SET_AUTO_UPDATE: 'modpacks:setAutoUpdate',
+
   // Launcher
   LAUNCHER_LAUNCH: 'launcher:launch',
   LAUNCHER_STOP: 'launcher:stop',
@@ -123,6 +134,28 @@ const electronAPI = {
       ipcRenderer.invoke(IPC_CHANNELS.MODS_ORGANIZE, version),
     activateVersion: (version: string): Promise<void> =>
       ipcRenderer.invoke(IPC_CHANNELS.MODS_ACTIVATE_VERSION, version),
+  },
+
+  // Modpacks
+  modpacks: {
+    search: (query: string, filters: any): Promise<any[]> =>
+      ipcRenderer.invoke(IPC_CHANNELS.MODPACKS_SEARCH, query, filters),
+    getDetails: (modpackId: string, source: string): Promise<any> =>
+      ipcRenderer.invoke(IPC_CHANNELS.MODPACKS_GET_DETAILS, modpackId, source),
+    getFiles: (modpackId: string, source: string, gameVersion?: string): Promise<any[]> =>
+      ipcRenderer.invoke(IPC_CHANNELS.MODPACKS_GET_FILES, modpackId, source, gameVersion),
+    install: (modpack: any, file: any): Promise<void> =>
+      ipcRenderer.invoke(IPC_CHANNELS.MODPACKS_INSTALL, modpack, file),
+    uninstall: (modpackId: string): Promise<void> =>
+      ipcRenderer.invoke(IPC_CHANNELS.MODPACKS_UNINSTALL, modpackId),
+    getInstalled: (): Promise<any[]> =>
+      ipcRenderer.invoke(IPC_CHANNELS.MODPACKS_GET_INSTALLED),
+    checkUpdates: (): Promise<any[]> =>
+      ipcRenderer.invoke(IPC_CHANNELS.MODPACKS_CHECK_UPDATES),
+    update: (modpackId: string): Promise<void> =>
+      ipcRenderer.invoke(IPC_CHANNELS.MODPACKS_UPDATE, modpackId),
+    setAutoUpdate: (modpackId: string, enabled: boolean): Promise<void> =>
+      ipcRenderer.invoke(IPC_CHANNELS.MODPACKS_SET_AUTO_UPDATE, modpackId, enabled),
   },
 
   // Launcher

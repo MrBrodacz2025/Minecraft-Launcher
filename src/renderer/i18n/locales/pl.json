@@ -28,6 +28,7 @@
   "sidebar": {
     "home": "Główna",
     "mods": "Mody",
+    "modpacks": "Paczki modów",
     "settings": "Ustawienia",
     "console": "Konsola"
   },
@@ -73,6 +74,35 @@
     "sortDownloads": "Pobrania",
     "sortUpdated": "Data aktualizacji",
     "sortName": "Nazwa"
+  },
+  "modpacks": {
+    "title": "Paczki modów",
+    "browse": "Przeglądaj paczki",
+    "installed": "Zainstalowane",
+    "searchPlaceholder": "Szukaj paczek modów...",
+    "searchFailed": "Wyszukiwanie paczek nie powiodło się",
+    "searchHint": "Wyszukaj paczki modów powyżej",
+    "filters": "Filtry",
+    "gameVersion": "Wersja gry",
+    "loader": "Loader",
+    "sortBy": "Sortuj po",
+    "noInstalled": "Brak zainstalowanych paczek modów",
+    "noFiles": "Brak dostępnych plików",
+    "availableVersions": "Dostępne wersje",
+    "website": "Strona paczki",
+    "installSuccess": "Zainstalowano {name}",
+    "installFailed": "Nie udało się zainstalować {name}",
+    "uninstallSuccess": "Paczka modów została usunięta",
+    "uninstallFailed": "Nie udało się usunąć paczki modów",
+    "checkUpdates": "Sprawdź aktualizacje",
+    "updatesFound": "Dostępne aktualizacje: {count}",
+    "noUpdates": "Wszystkie paczki są aktualne",
+    "checkUpdatesFailed": "Nie udało się sprawdzić aktualizacji",
+    "updateAvailable": "Dostępna aktualizacja",
+    "updateSuccess": "Paczka zaktualizowana pomyślnie",
+    "updateFailed": "Nie udało się zaktualizować paczki",
+    "autoUpdateOn": "Auto-aktualizacja włączona",
+    "autoUpdateOff": "Auto-aktualizacja wyłączona"
   },
   "settings": {
     "title": "Ustawienia",

@@ -9,6 +9,10 @@ import type {
   InstalledMod,
   ModConflict,
   ModDependency,
+  Modpack,
+  ModpackFile,
+  ModpackSearchFilters,
+  InstalledModpack,
   LaunchConfig,
   LauncherStatus,
   LauncherSettings,
@@ -57,6 +61,19 @@ export interface ElectronAPI {
     scanFolders: () => Promise<{ version: string; files: string[] }[]>;
     organize: (version: string) => Promise<void>;
     activateVersion: (version: string) => Promise<void>;
+  };
+
+  // Modpacks
+  modpacks: {
+    search: (query: string, filters: ModpackSearchFilters) => Promise<Modpack[]>;
+    getDetails: (modpackId: string, source: 'curseforge' | 'modrinth') => Promise<Modpack | null>;
+    getFiles: (modpackId: string, source: 'curseforge' | 'modrinth', gameVersion?: string) => Promise<ModpackFile[]>;
+    install: (modpack: Modpack, file: ModpackFile) => Promise<void>;
+    uninstall: (modpackId: string) => Promise<void>;
+    getInstalled: () => Promise<InstalledModpack[]>;
+    checkUpdates: () => Promise<InstalledModpack[]>;
+    update: (modpackId: string) => Promise<void>;
+    setAutoUpdate: (modpackId: string, enabled: boolean) => Promise<void>;
   };
 
   // Java Management

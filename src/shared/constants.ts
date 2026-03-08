@@ -122,6 +122,17 @@ export const IPC_CHANNELS = {
   MODS_ORGANIZE: 'mods:organize',
   MODS_ACTIVATE_VERSION: 'mods:activateVersion',
 
+  // Modpacks
+  MODPACKS_SEARCH: 'modpacks:search',
+  MODPACKS_GET_DETAILS: 'modpacks:getDetails',
+  MODPACKS_GET_FILES: 'modpacks:getFiles',
+  MODPACKS_INSTALL: 'modpacks:install',
+  MODPACKS_UNINSTALL: 'modpacks:uninstall',
+  MODPACKS_GET_INSTALLED: 'modpacks:getInstalled',
+  MODPACKS_CHECK_UPDATES: 'modpacks:checkUpdates',
+  MODPACKS_UPDATE: 'modpacks:update',
+  MODPACKS_SET_AUTO_UPDATE: 'modpacks:setAutoUpdate',
+
   // Launcher
   LAUNCHER_LAUNCH: 'launcher:launch',
   LAUNCHER_STOP: 'launcher:stop',

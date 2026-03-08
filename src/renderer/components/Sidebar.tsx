@@ -1,8 +1,8 @@
 import React from 'react';
-import { FiHome, FiPackage, FiSettings, FiTerminal } from 'react-icons/fi';
+import { FiHome, FiPackage, FiBox, FiSettings, FiTerminal } from 'react-icons/fi';
 import { useI18n } from '../i18n';
 
-type Page = 'home' | 'mods' | 'settings';
+type Page = 'home' | 'mods' | 'modpacks' | 'settings';
 
 interface SidebarProps {
   currentPage: Page;
@@ -14,6 +14,7 @@ interface SidebarProps {
 const navItems: { id: Page; icon: React.ElementType; labelKey: string }[] = [
   { id: 'home', icon: FiHome, labelKey: 'sidebar.home' },
   { id: 'mods', icon: FiPackage, labelKey: 'sidebar.mods' },
+  { id: 'modpacks', icon: FiBox, labelKey: 'sidebar.modpacks' },
   { id: 'settings', icon: FiSettings, labelKey: 'sidebar.settings' },
 ];
 

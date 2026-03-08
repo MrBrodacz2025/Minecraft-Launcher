@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 import log from 'electron-log';
 
 import { CURSEFORGE_API_URL, CURSEFORGE_API_KEY, CURSEFORGE_MINECRAFT_ID } from '../shared/constants';
-import type { Mod, ModVersion, ModDependency, LoaderType, ModSearchFilters } from '../shared/types';
+import type { Mod, ModVersion, ModDependency, LoaderType, ModSearchFilters, Modpack, ModpackFile, ModpackSearchFilters } from '../shared/types';
 
 interface CurseForgeSearchResult {
   data: CurseForgeMod[];
@@ -351,6 +351,120 @@ export class CurseForgeAPI {
       case 'newest': return 4;
       default: return 1;
     }
+  }
+
+  // ==================== MODPACKS ====================
+
+  async searchModpacks(query: string, filters: ModpackSearchFilters): Promise<Modpack[]> {
+    try {
+      const params: Record<string, unknown> = {
+        gameId: CURSEFORGE_MINECRAFT_ID,
+        classId: 4471, // Modpacks class
+        searchFilter: query,
+        pageSize: filters.pageSize || 20,
+        index: ((filters.page || 1) - 1) * (filters.pageSize || 20),
+      };
+
+      if (filters.gameVersion) {
+        params.gameVersion = filters.gameVersion;
+      }
+
+      if (filters.loader && filters.loader !== 'vanilla') {
+        const loaderId = this.getModLoaderId(filters.loader);
+        if (loaderId) {
+          params.modLoaderType = loaderId;
+        }
+      }
+
+      if (filters.sortBy) {
+        params.sortField = this.getSortField(filters.sortBy);
+        params.sortOrder = 'desc';
+      }
+
+      const response = await this.client.get<CurseForgeSearchResult>('/mods/search', { params });
+
+      return response.data.data.map((mod) => this.convertModpack(mod));
+    } catch (error) {
+      log.error('CurseForge modpack search failed:', error);
+      throw new Error('Failed to search CurseForge modpacks');
+    }
+  }
+
+  async getModpack(modpackId: number): Promise<Modpack | null> {
+    try {
+      const response = await this.client.get<{ data: CurseForgeMod }>(`/mods/${modpackId}`);
+      return this.convertModpack(response.data.data);
+    } catch (error) {
+      log.error(`Failed to get modpack ${modpackId}:`, error);
+      return null;
+    }
+  }
+
+  async getModpackFiles(modpackId: number, gameVersion?: string): Promise<ModpackFile[]> {
+    try {
+      const params: Record<string, unknown> = {
+        pageSize: 50,
+      };
+
+      if (gameVersion) {
+        params.gameVersion = gameVersion;
+      }
+
+      const response = await this.client.get<{ data: CurseForgeFile[] }>(
+        `/mods/${modpackId}/files`,
+        { params }
+      );
+
+      return response.data.data.map((file) => this.convertModpackFile(file, modpackId.toString()));
+    } catch (error) {
+      log.error(`Failed to get files for modpack ${modpackId}:`, error);
+      return [];
+    }
+  }
+
+  private convertModpack(curseforgeMod: CurseForgeMod): Modpack {
+    return {
+      id: curseforgeMod.id.toString(),
+      name: curseforgeMod.name,
+      slug: curseforgeMod.slug,
+      description: curseforgeMod.summary,
+      author: curseforgeMod.authors[0]?.name || 'Unknown',
+      downloads: curseforgeMod.downloadCount,
+      iconUrl: curseforgeMod.logo?.thumbnailUrl,
+      categories: curseforgeMod.categories.map((c) => c.name),
+      source: 'curseforge',
+      websiteUrl: curseforgeMod.links.websiteUrl,
+      latestFiles: curseforgeMod.latestFiles.map((file) =>
+        this.convertModpackFile(file, curseforgeMod.id.toString())
+      ),
+    };
+  }
+
+  private convertModpackFile(file: CurseForgeFile, modpackId: string): ModpackFile {
+    const loaders: LoaderType[] = [];
+    for (const gv of file.gameVersions) {
+      const lowerGv = gv.toLowerCase();
+      if (lowerGv === 'fabric') loaders.push('fabric');
+      if (lowerGv === 'forge') loaders.push('forge');
+      if (lowerGv === 'neoforge') loaders.push('neoforge');
+    }
+    if (loaders.length === 0) loaders.push('forge');
+
+    const gameVersions = file.gameVersions.filter((gv) => /^\d+\.\d+(\.\d+)?$/.test(gv));
+
+    return {
+      id: file.id.toString(),
+      modpackId,
+      name: file.displayName,
+      versionNumber: file.displayName,
+      gameVersions,
+      loaders: [...new Set(loaders)],
+      downloadUrl: file.downloadUrl || '',
+      fileName: file.fileName,
+      fileSize: file.fileLength,
+      releaseType: this.getReleaseType(file.releaseType),
+      datePublished: file.fileDate,
+    };
   }
 }
 

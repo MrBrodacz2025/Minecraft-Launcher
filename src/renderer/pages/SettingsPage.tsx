@@ -567,7 +567,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ settings, onSettingsChange 
           </div>
 
           <div className="mt-4 pt-4 border-t border-launcher-border text-center text-sm text-launcher-textMuted">
-            © 2024-2026 Mr_Brodacz - CLIENT. Nieoficjalny launcher.
+            © 2024-2026 EnderGate. Nieoficjalny launcher.
           </div>
         </motion.section>
       </div>

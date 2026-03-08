@@ -31,7 +31,7 @@ export class MinecraftAPI {
     this.client = axios.create({
       timeout: 30000,
       headers: {
-        'User-Agent': 'MinecraftLauncher/1.0.0',
+        'User-Agent': 'EnderGate/1.0.0',
       },
     });
   }

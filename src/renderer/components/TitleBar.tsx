@@ -63,7 +63,7 @@ const TitleBar: React.FC<TitleBarProps> = ({
       {/* Logo and Title */}
       <div className="flex items-center gap-3 no-drag">
         <img src={launcherIcon} alt="Logo" className="w-6 h-6 rounded" />
-        <span className="font-semibold text-sm">Mr_Brodacz - CLIENT</span>
+        <span className="font-semibold text-sm">EnderGate</span>
       </div>
 
       {/* Right side controls */}

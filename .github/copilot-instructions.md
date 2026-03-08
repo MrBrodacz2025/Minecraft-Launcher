@@ -1,10 +1,10 @@
 # GitHub Copilot Project Context
 
-This file provides context about the Mr_Brodacz - CLIENT Minecraft Launcher project for GitHub Copilot.
+This file provides context about the EnderGate Minecraft Launcher project for GitHub Copilot.
 
 ## Project Overview
 
-**Mr_Brodacz - CLIENT** is an unofficial Minecraft Java Edition launcher built with:
+**EnderGate** is an unofficial Minecraft Java Edition launcher built with:
 - **Electron 40.x** - Desktop application framework
 - **TypeScript 5.3** - Type-safe JavaScript
 - **React 18.2** - UI library

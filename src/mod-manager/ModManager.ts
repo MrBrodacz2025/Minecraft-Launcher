@@ -609,7 +609,7 @@ export class ModManager {
     log.info(`Installing menu mods for ${gameVersion}...`);
 
     try {
-      const headers = { 'User-Agent': 'Mr_Brodacz-CLIENT/1.0.0' };
+      const headers = { 'User-Agent': 'EnderGate/1.0.0' };
 
       // FancyMenu project ID: Wq5SjeWM, Konkrete: J81TRJWm, Melody: CVT4pFB2
       const modsToInstall = [
@@ -710,7 +710,7 @@ export class ModManager {
 
     log.info(`Installing ${modsToInstall.length} optimization mods for ${gameVersion}...`);
 
-    const headers = { 'User-Agent': 'Mr_Brodacz-CLIENT/1.0.0' };
+    const headers = { 'User-Agent': 'EnderGate/1.0.0' };
 
     for (const mod of modsToInstall) {
       try {

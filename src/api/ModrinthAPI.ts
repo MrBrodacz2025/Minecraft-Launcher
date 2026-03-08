@@ -82,7 +82,7 @@ export class ModrinthAPI {
       baseURL: MODRINTH_API_URL,
       timeout: 30000,
       headers: {
-        'User-Agent': 'MinecraftLauncher/1.0.0 (contact@example.com)',
+        'User-Agent': 'EnderGate/1.0.0 (contact@example.com)',
         'Content-Type': 'application/json',
       },
     });

@@ -214,7 +214,7 @@ export class JavaService {
 
   private fetchJson<T>(url: string): Promise<T> {
     return new Promise((resolve, reject) => {
-      https.get(url, { headers: { 'User-Agent': 'MinecraftLauncher/1.0' } }, (res) => {
+      https.get(url, { headers: { 'User-Agent': 'EnderGate/1.0.0' } }, (res) => {
         if (res.statusCode === 307 || res.statusCode === 302 || res.statusCode === 301) {
           // Follow redirect
           this.fetchJson<T>(res.headers.location!).then(resolve).catch(reject);
@@ -246,7 +246,7 @@ export class JavaService {
       let downloaded = 0;
 
       const makeRequest = (requestUrl: string) => {
-        https.get(requestUrl, { headers: { 'User-Agent': 'MinecraftLauncher/1.0' } }, (res) => {
+        https.get(requestUrl, { headers: { 'User-Agent': 'EnderGate/1.0.0' } }, (res) => {
           if (res.statusCode === 307 || res.statusCode === 302 || res.statusCode === 301) {
             makeRequest(res.headers.location!);
             return;

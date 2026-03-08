@@ -1,7 +1,7 @@
 {
-  "name": "mr-brodacz-client",
+  "name": "endergate",
   "version": "1.0.0",
-  "description": "Mr_Brodacz - CLIENT - Minecraft Launcher",
+  "description": "EnderGate - Minecraft Launcher",
   "main": "dist/main/main/main.js",
   "author": {
     "name": "Mr_Brodacz",
@@ -79,8 +79,8 @@
     "webpack-dev-server": "^5.0.2"
   },
   "build": {
-    "appId": "com.mrbrodacz.client",
-    "productName": "Mr_Brodacz - CLIENT",
+    "appId": "com.endergate.launcher",
+    "productName": "EnderGate",
     "directories": {
       "output": "dist-app",
       "buildResources": "build"
@@ -114,7 +114,7 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "Mr_Brodacz - CLIENT",
+      "shortcutName": "EnderGate",
       "runAfterFinish": true,
       "deleteAppDataOnUninstall": false
     },

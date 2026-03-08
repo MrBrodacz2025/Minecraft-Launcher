@@ -467,7 +467,7 @@ export class MinecraftLauncherService {
     }
 
     // Common JVM args
-    args.push('-Dminecraft.launcher.brand=Mr_Brodacz-CLIENT');
+    args.push('-Dminecraft.launcher.brand=EnderGate');
     args.push('-Dminecraft.launcher.version=1.0.0');
 
     return args;
@@ -512,7 +512,7 @@ export class MinecraftLauncherService {
   ): string {
     return arg
       .replace(/\${natives_directory}/g, path.join(gameDirectory, 'versions', versionId, 'natives'))
-      .replace(/\${launcher_name}/g, 'Mr_Brodacz-CLIENT')
+      .replace(/\${launcher_name}/g, 'EnderGate')
       .replace(/\${launcher_version}/g, '1.0.0')
       .replace(/\${classpath}/g, '') // Handled separately
       .replace(/\${library_directory}/g, path.join(gameDirectory, 'libraries'))
@@ -537,7 +537,7 @@ export class MinecraftLauncherService {
       .replace(/\${auth_uuid}/g, config.profile.id)
       .replace(/\${auth_access_token}/g, config.profile.accessToken)
       .replace(/\${user_type}/g, 'msa')
-      .replace(/\${version_type}/g, 'Mr_Brodacz CLIENT')
+      .replace(/\${version_type}/g, 'EnderGate')
       .replace(/\${user_properties}/g, '{}')
       .replace(/\${resolution_width}/g, '854')
       .replace(/\${resolution_height}/g, '480')

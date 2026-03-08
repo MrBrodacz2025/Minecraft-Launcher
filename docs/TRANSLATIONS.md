@@ -1,6 +1,6 @@
 # 🌍 Translator's Guide - Adding Custom Languages
 
-This guide explains how to create and add custom language translations to Mr_Brodacz - CLIENT.
+This guide explains how to create and add custom language translations to EnderGate.
 
 ## 📁 Translation File Format
 
@@ -145,9 +145,9 @@ const builtInTranslations: Record<string, Translations> = {
 Place your JSON file in the launcher's custom languages folder:
 
 ```
-Windows: %APPDATA%/MinecraftLauncher/languages/
-macOS:   ~/Library/Application Support/MinecraftLauncher/languages/
-Linux:   ~/.config/MinecraftLauncher/languages/
+Windows: %APPDATA%/EnderGate/languages/
+macOS:   ~/Library/Application Support/EnderGate/languages/
+Linux:   ~/.config/EnderGate/languages/
 ```
 
 The launcher will automatically detect and load custom language files on startup.
@@ -220,4 +220,4 @@ If you have questions about translations:
 - Open an issue on GitHub
 - Tag it with `translation` label
 
-Thank you for helping make Mr_Brodacz - CLIENT accessible to more players! 🎮
+Thank you for helping make EnderGate accessible to more players! 🎮

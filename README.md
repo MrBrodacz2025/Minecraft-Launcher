@@ -1,7 +1,7 @@
 <div align="center">
-  <img src="assets/icon.png" alt="Mr_Brodacz - CLIENT" width="128" height="128" />
+  <img src="assets/icon.png" alt="EnderGate" width="128" height="128" />
 
-  # Mr_Brodacz — CLIENT
+  # EnderGate
 
   **A modern, unofficial Minecraft Java Edition launcher**
 
@@ -21,7 +21,7 @@
 <br />
 
 > [!NOTE]
-> Mr_Brodacz — CLIENT requires a valid Minecraft Java Edition license and a Microsoft account to sign in.
+> EnderGate requires a valid Minecraft Java Edition license and a Microsoft account to sign in.
 
 <br />
 
@@ -82,8 +82,8 @@
 
 | Variant | Description | File |
 |---------|-------------|------|
-| **Installer** *(recommended)* | NSIS — desktop shortcut, start menu, uninstaller | `Mr_Brodacz-CLIENT-Setup-X.X.X.exe` |
-| **Portable** | No installation required — run from any location | `Mr_Brodacz-CLIENT-X.X.X-portable.exe` |
+| **Installer** *(recommended)* | NSIS — desktop shortcut, start menu, uninstaller | `EnderGate-Setup-X.X.X.exe` |
+| **Portable** | No installation required — run from any location | `EnderGate-X.X.X-portable.exe` |
 
 > Requirements: Windows 10+ (64-bit) · 4 GB RAM · Microsoft account with MC Java
 
@@ -93,36 +93,36 @@
 
 | Variant | Distributions | File |
 |---------|--------------|------|
-| **AppImage** *(recommended)* | All | `Mr_Brodacz-CLIENT-X.X.X-x86_64.AppImage` |
-| **DEB** | Debian, Ubuntu, Mint | `Mr_Brodacz-CLIENT-X.X.X-amd64.deb` |
-| **RPM** | Fedora, RHEL, CentOS | `Mr_Brodacz-CLIENT-X.X.X-x86_64.rpm` |
-| **tar.gz** | All (manual) | `Mr_Brodacz-CLIENT-X.X.X-x64.tar.gz` |
+| **AppImage** *(recommended)* | All | `EnderGate-X.X.X-x86_64.AppImage` |
+| **DEB** | Debian, Ubuntu, Mint | `EnderGate-X.X.X-amd64.deb` |
+| **RPM** | Fedora, RHEL, CentOS | `EnderGate-X.X.X-x86_64.rpm` |
+| **tar.gz** | All (manual) | `EnderGate-X.X.X-x64.tar.gz` |
 
 <details>
 <summary><b>Installation instructions</b></summary>
 
 **AppImage:**
 ```bash
-chmod +x Mr_Brodacz-CLIENT-*.AppImage
-./Mr_Brodacz-CLIENT-*.AppImage
+chmod +x EnderGate-*.AppImage
+./EnderGate-*.AppImage
 ```
 
 **DEB (Debian/Ubuntu/Mint):**
 ```bash
-sudo dpkg -i Mr_Brodacz-CLIENT-*.deb
+sudo dpkg -i EnderGate-*.deb
 sudo apt-get install -f   # fix dependencies
 ```
 
 **RPM (Fedora/RHEL):**
 ```bash
-sudo dnf install Mr_Brodacz-CLIENT-*.rpm
+sudo dnf install EnderGate-*.rpm
 ```
 
 **tar.gz:**
 ```bash
-tar -xzf Mr_Brodacz-CLIENT-*.tar.gz
-cd Mr_Brodacz-CLIENT-*/
-./mr-brodacz-client
+tar -xzf EnderGate-*.tar.gz
+cd EnderGate-*/
+./endergate
 ```
 
 </details>
@@ -135,8 +135,8 @@ cd Mr_Brodacz-CLIENT-*/
 
 | Variant | Description | File |
 |---------|-------------|------|
-| **DMG** *(recommended)* | Drag to Applications | `Mr_Brodacz-CLIENT-X.X.X-{arch}.dmg` |
-| **ZIP** | Extract and run | `Mr_Brodacz-CLIENT-X.X.X-{arch}.zip` |
+| **DMG** *(recommended)* | Drag to Applications | `EnderGate-X.X.X-{arch}.dmg` |
+| **ZIP** | Extract and run | `EnderGate-X.X.X-{arch}.zip` |
 
 > Supported architectures: **Apple Silicon** (M1/M2/M3/M4) and **Intel x64**
 >
@@ -380,9 +380,9 @@ The application includes the following public API keys that are safe to include 
 
 | System | Path |
 |:-------|:-----|
-| Windows | `%APPDATA%/MinecraftLauncher/languages/` |
-| macOS | `~/Library/Application Support/MinecraftLauncher/languages/` |
-| Linux | `~/.config/MinecraftLauncher/languages/` |
+| Windows | `%APPDATA%/EnderGate/languages/` |
+| macOS | `~/Library/Application Support/EnderGate/languages/` |
+| Linux | `~/.config/EnderGate/languages/` |
 
 Details: [docs/TRANSLATIONS.md](docs/TRANSLATIONS.md)
 
@@ -430,7 +430,7 @@ This project is licensed under the **GNU General Public License v3.0** — see t
 
 <div align="center">
 
-  **[⬆ Back to top](#mr_brodacz--client)**
+  **[⬆ Back to top](#endergate)**
 
   <sub>Made with ❤️ for the Minecraft community</sub>
 

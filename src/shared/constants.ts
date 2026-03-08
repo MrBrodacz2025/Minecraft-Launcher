@@ -55,13 +55,13 @@ export const getLauncherDirectory = (): string => {
   const platform = os.platform();
   switch (platform) {
     case 'win32':
-      return path.join(process.env.APPDATA || '', 'MinecraftLauncher');
+      return path.join(process.env.APPDATA || '', 'EnderGate');
     case 'darwin':
-      return path.join(os.homedir(), 'Library', 'Application Support', 'MinecraftLauncher');
+      return path.join(os.homedir(), 'Library', 'Application Support', 'EnderGate');
     case 'linux':
-      return path.join(os.homedir(), '.config', 'MinecraftLauncher');
+      return path.join(os.homedir(), '.config', 'EnderGate');
     default:
-      return path.join(os.homedir(), '.minecraft-launcher');
+      return path.join(os.homedir(), '.endergate');
   }
 };
 

@@ -48,7 +48,7 @@ export class StatusService {
             timeout: 10000,
             validateStatus: () => true, // Accept any status code
             headers: {
-              'User-Agent': 'MinecraftLauncher/1.0'
+              'User-Agent': 'EnderGate/1.0.0'
             }
           });
           const responseTime = Date.now() - startTime;

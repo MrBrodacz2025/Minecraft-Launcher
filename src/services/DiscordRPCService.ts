@@ -35,9 +35,9 @@ class DiscordRPCService {
         this.connected = true;
         this.setActivity({
           details: 'W menu głównym',
-          state: 'Mr_Brodacz - CLIENT',
+          state: 'EnderGate',
           largeImageKey: 'logo',
-          largeImageText: 'Mr_Brodacz - CLIENT',
+          largeImageText: 'EnderGate',
           startTimestamp: this.startTime
         });
       });
@@ -84,7 +84,7 @@ class DiscordRPCService {
         details: activity.details,
         state: activity.state,
         largeImageKey: activity.largeImageKey || 'logo',
-        largeImageText: activity.largeImageText || 'Mr_Brodacz - CLIENT',
+        largeImageText: activity.largeImageText || 'EnderGate',
         smallImageKey: activity.smallImageKey,
         smallImageText: activity.smallImageText,
         startTimestamp: activity.startTimestamp,
@@ -104,7 +104,7 @@ class DiscordRPCService {
       details: 'W menu głównym',
       state: 'Wybiera wersję do gry',
       largeImageKey: 'logo',
-      largeImageText: 'Mr_Brodacz - CLIENT',
+      largeImageText: 'EnderGate',
       startTimestamp: this.startTime
     });
   }
@@ -118,7 +118,7 @@ class DiscordRPCService {
       details: `Pobiera Minecraft ${version}`,
       state: state,
       largeImageKey: 'logo',
-      largeImageText: 'Mr_Brodacz - CLIENT',
+      largeImageText: 'EnderGate',
       smallImageKey: 'download',
       smallImageText: 'Pobieranie',
       startTimestamp: this.startTime
@@ -130,7 +130,7 @@ class DiscordRPCService {
       details: `Gra w Minecraft ${version}`,
       state: serverName ? `Na serwerze: ${serverName}` : 'Singleplayer',
       largeImageKey: 'logo',
-      largeImageText: 'Mr_Brodacz - CLIENT',
+      largeImageText: 'EnderGate',
       smallImageKey: 'minecraft',
       smallImageText: `Minecraft ${version}`,
       startTimestamp: Date.now()
@@ -150,7 +150,7 @@ class DiscordRPCService {
       details: 'Przegląda mody',
       state: 'W menedżerze modów',
       largeImageKey: 'logo',
-      largeImageText: 'Mr_Brodacz - CLIENT',
+      largeImageText: 'EnderGate',
       startTimestamp: this.startTime
     });
   }
@@ -160,7 +160,7 @@ class DiscordRPCService {
       details: 'W ustawieniach',
       state: 'Konfiguruje launcher',
       largeImageKey: 'logo',
-      largeImageText: 'Mr_Brodacz - CLIENT',
+      largeImageText: 'EnderGate',
       startTimestamp: this.startTime
     });
   }

@@ -1,6 +1,6 @@
 {
-  "appId": "com.minecraft.launcher",
-  "productName": "Minecraft Launcher",
+  "appId": "com.endergate.launcher",
+  "productName": "EnderGate",
   "copyright": "Copyright © 2024-2026",
   "asar": true,
   "asarUnpack": [
@@ -34,7 +34,7 @@
       }
     ],
     "icon": "build/icon.ico",
-    "publisherName": "Minecraft Launcher",
+    "publisherName": "EnderGate",
     "artifactName": "${productName}-Setup-${version}.${ext}",
     "signAndEditExecutable": false
   },
@@ -47,7 +47,7 @@
     "installerHeaderIcon": "build/icon.ico",
     "createDesktopShortcut": true,
     "createStartMenuShortcut": true,
-    "shortcutName": "Minecraft Launcher",
+    "shortcutName": "EnderGate",
     "perMachine": false,
     "runAfterFinish": true,
     "deleteAppDataOnUninstall": false,
@@ -119,10 +119,10 @@
     "synopsis": "Nieoficjalny launcher do Minecraft",
     "description": "Nowoczesny launcher do Minecraft Java Edition z obsługą Fabric, Forge, NeoForge i modów",
     "desktop": {
-      "Name": "Minecraft Launcher",
-      "Comment": "Minecraft Java Edition Launcher",
+      "Name": "EnderGate",
+      "Comment": "EnderGate - Minecraft Java Edition Launcher",
       "Categories": "Game;ActionGame",
-      "StartupWMClass": "minecraft-launcher"
+      "StartupWMClass": "endergate"
     }
   },
   "appImage": {

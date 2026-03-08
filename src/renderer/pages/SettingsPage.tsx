@@ -373,6 +373,17 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ settings, onSettingsChange 
             placeholder="-XX:+UseG1GC -XX:+UnlockExperimentalVMOptions..."
           />
 
+          {/* VULN-007: Warning for dangerous JVM arguments */}
+          {localSettings.jvmArguments && /-javaagent:|-agentlib:|-agentpath:|-Xbootclasspath|-Xpatch:|--patch-module/i.test(localSettings.jvmArguments) && (
+            <div className="flex items-start gap-2 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-sm mt-4">
+              <FiInfo className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+              <p className="text-red-400">
+                Wykryto potencjalnie niebezpieczne argumenty JVM (np. -javaagent). 
+                Mogą one załadować dowolny kod z zewnątrz. Używaj tylko jeśli ufasz źródłu.
+              </p>
+            </div>
+          )}
+
           <div className="flex items-start gap-2 p-3 bg-launcher-cardHover rounded-lg text-sm mt-4">
             <FiInfo className="w-4 h-4 text-launcher-accent mt-0.5 flex-shrink-0" />
             <p className="text-launcher-textMuted">

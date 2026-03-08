@@ -196,6 +196,10 @@ export interface ModVersion {
   dependencies: ModDependency[];
   releaseType: 'release' | 'beta' | 'alpha';
   datePublished: string;
+  hashes?: {
+    sha1?: string;
+    sha512?: string;
+  };
 }
 
 export interface ModDependency {

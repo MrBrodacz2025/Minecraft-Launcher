@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import * as crypto from 'crypto';
 import axios from 'axios';
 import log from 'electron-log';
 import Store from 'electron-store';
@@ -206,6 +207,23 @@ export class ModManager {
         response.data.on('error', reject);
       });
 
+      // VULN-006: Verify file integrity using hashes from API
+      if (version.hashes) {
+        const hashAlgo = version.hashes.sha512 ? 'sha512' : version.hashes.sha1 ? 'sha1' : null;
+        const expectedHash = version.hashes.sha512 || version.hashes.sha1;
+
+        if (hashAlgo && expectedHash) {
+          const isValid = await this.verifyFileHash(modPath, expectedHash, hashAlgo);
+          if (!isValid) {
+            fs.unlinkSync(modPath);
+            throw new Error(`Hash mismatch for mod ${mod.name} — file may be corrupted or tampered with`);
+          }
+          log.info(`Hash verified (${hashAlgo}) for ${mod.name}`);
+        }
+      } else {
+        log.warn(`No hash available for ${mod.name} — skipping verification`);
+      }
+
       // Download dependencies
       const requiredDeps = version.dependencies.filter((d) => d.type === 'required');
       for (const dep of requiredDeps) {
@@ -395,6 +413,23 @@ export class ModManager {
     }
 
     return conflicts;
+  }
+
+  /**
+   * VULN-006: Verify file integrity using hash comparison
+   */
+  private async verifyFileHash(
+    filePath: string,
+    expectedHash: string,
+    algorithm: 'sha1' | 'sha512'
+  ): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const hash = crypto.createHash(algorithm);
+      const stream = fs.createReadStream(filePath);
+      stream.on('data', (data) => hash.update(data));
+      stream.on('end', () => resolve(hash.digest('hex') === expectedHash.toLowerCase()));
+      stream.on('error', reject);
+    });
   }
 
   async getDependencies(modVersion: ModVersion): Promise<ModDependency[]> {

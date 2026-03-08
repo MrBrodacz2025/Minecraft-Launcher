@@ -174,29 +174,60 @@ export class SecureStorageService {
 
   /**
    * Get or create a machine-specific encryption key
-   * This is stored in electron-store and is unique per installation
+   * Uses PBKDF2 key derivation from machine-specific seed instead of storing raw key
    */
   private getOrCreateEncryptionKey(): string {
     if (this.encryptionKey) {
       return this.encryptionKey;
     }
 
-    const keyStore = new Store<{ encKey: string }>({
+    const keyStore = new Store<{ encSalt?: string; encKey?: string }>({
       name: 'secure-key',
       cwd: getLauncherDirectory(),
     });
 
-    let key = keyStore.get('encKey');
-    
-    if (!key) {
-      // Generate a new 256-bit key
-      key = crypto.randomBytes(32).toString('hex');
-      keyStore.set('encKey', key);
-      log.info('[SecureStorage] Generated new encryption key');
+    // Migrate from old raw key storage to salt-based derivation
+    const legacyKey = keyStore.get('encKey');
+    let salt = keyStore.get('encSalt');
+
+    if (!salt) {
+      salt = crypto.randomBytes(32).toString('hex');
+      keyStore.set('encSalt', salt);
+
+      if (legacyKey) {
+        // Keep legacy key temporarily for re-encryption migration
+        // (existing data still needs old key to decrypt first)
+        this.encryptionKey = legacyKey;
+        return legacyKey;
+      }
+
+      log.info('[SecureStorage] Generated new encryption salt');
+    } else if (legacyKey) {
+      // Migration: remove stored raw key once salt exists
+      keyStore.delete('encKey' as any);
+      log.info('[SecureStorage] Removed legacy raw encryption key');
     }
 
-    this.encryptionKey = key;
-    return key;
+    // Derive key from machine-specific seed + stored salt
+    const os = require('os');
+    const machineSeed = [
+      os.hostname(),
+      os.homedir(),
+      os.userInfo().username,
+      os.cpus()[0]?.model || '',
+      os.totalmem().toString(),
+    ].join('|');
+
+    const key = crypto.pbkdf2Sync(
+      machineSeed,
+      Buffer.from(salt, 'hex'),
+      100000,
+      32,
+      'sha512'
+    );
+
+    this.encryptionKey = key.toString('hex');
+    return this.encryptionKey;
   }
 }
 

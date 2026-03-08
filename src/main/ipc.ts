@@ -1,5 +1,6 @@
 import { ipcMain, BrowserWindow, dialog, shell, app } from 'electron';
 import log from 'electron-log';
+import { z } from 'zod';
 
 import { IPC_CHANNELS } from '../shared/constants';
 import { AuthService } from '../services/AuthService';
@@ -12,6 +13,20 @@ import { SettingsService } from '../services/SettingsService';
 import { StatusService } from '../services/StatusService';
 import { UpdaterService } from '../updater/UpdaterService';
 import { discordRPC } from '../services/DiscordRPCService';
+import {
+  validateIpcParam,
+  versionIdSchema,
+  loaderTypeSchema,
+  settingsSchema,
+  modSearchFiltersSchema,
+  modpackSearchFiltersSchema,
+  modSchema,
+  modVersionSchema,
+  modpackSchema,
+  modpackFileSchema,
+  launchConfigSchema,
+  sourceSchema,
+} from './ipc-validators';
 import type {
   LaunchConfig,
   ModSearchFilters,
@@ -95,9 +110,10 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.VERSIONS_GET_DETAILS, async (_event, versionId: string) => {
+  ipcMain.handle(IPC_CHANNELS.VERSIONS_GET_DETAILS, async (_event, versionId: unknown) => {
     try {
-      return await versionManager.getVersionDetails(versionId);
+      const id = validateIpcParam(versionIdSchema, versionId, 'versionId');
+      return await versionManager.getVersionDetails(id);
     } catch (error) {
       log.error('Versions: Get details failed', error);
       throw error;
@@ -113,10 +129,11 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.VERSIONS_INSTALL, async (_event, versionId: string) => {
+  ipcMain.handle(IPC_CHANNELS.VERSIONS_INSTALL, async (_event, versionId: unknown) => {
     try {
-      log.info(`Versions: Installing version ${versionId}`);
-      await versionManager.installVersion(versionId, (progress) => {
+      const id = validateIpcParam(versionIdSchema, versionId, 'versionId');
+      log.info(`Versions: Installing version ${id}`);
+      await versionManager.installVersion(id, (progress) => {
         mainWindow.webContents.send(IPC_CHANNELS.DOWNLOAD_PROGRESS, progress);
       });
     } catch (error) {
@@ -125,9 +142,10 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.VERSIONS_VERIFY, async (_event, versionId: string) => {
+  ipcMain.handle(IPC_CHANNELS.VERSIONS_VERIFY, async (_event, versionId: unknown) => {
     try {
-      return await versionManager.verifyVersion(versionId);
+      const id = validateIpcParam(versionIdSchema, versionId, 'versionId');
+      return await versionManager.verifyVersion(id);
     } catch (error) {
       log.error('Versions: Verify failed', error);
       throw error;
@@ -135,9 +153,10 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
   });
 
   // ==================== LOADERS ====================
-  ipcMain.handle(IPC_CHANNELS.LOADERS_GET_AVAILABLE, async (_event, minecraftVersion: string) => {
+  ipcMain.handle(IPC_CHANNELS.LOADERS_GET_AVAILABLE, async (_event, minecraftVersion: unknown) => {
     try {
-      return await loaderManager.getAvailableLoaders(minecraftVersion);
+      const mcVersion = validateIpcParam(versionIdSchema, minecraftVersion, 'minecraftVersion');
+      return await loaderManager.getAvailableLoaders(mcVersion);
     } catch (error) {
       log.error('Loaders: Get available failed', error);
       throw error;
@@ -146,10 +165,13 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
 
   ipcMain.handle(
     IPC_CHANNELS.LOADERS_INSTALL,
-    async (_event, loader: LoaderType, minecraftVersion: string, loaderVersion: string) => {
+    async (_event, loader: unknown, minecraftVersion: unknown, loaderVersion: unknown) => {
       try {
-        log.info(`Loaders: Installing ${loader} ${loaderVersion} for MC ${minecraftVersion}`);
-        await loaderManager.installLoader(loader, minecraftVersion, loaderVersion, (progress) => {
+        const validLoader = validateIpcParam(loaderTypeSchema, loader, 'loader');
+        const mcVersion = validateIpcParam(versionIdSchema, minecraftVersion, 'minecraftVersion');
+        const ldrVersion = validateIpcParam(versionIdSchema, loaderVersion, 'loaderVersion');
+        log.info(`Loaders: Installing ${validLoader} ${ldrVersion} for MC ${mcVersion}`);
+        await loaderManager.installLoader(validLoader, mcVersion, ldrVersion, (progress) => {
           mainWindow.webContents.send(IPC_CHANNELS.DOWNLOAD_PROGRESS, progress);
         });
       } catch (error) {
@@ -169,31 +191,37 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
   });
 
   // ==================== MODS ====================
-  ipcMain.handle(IPC_CHANNELS.MODS_SEARCH, async (_event, query: string, filters: ModSearchFilters) => {
+  ipcMain.handle(IPC_CHANNELS.MODS_SEARCH, async (_event, query: unknown, filters: unknown) => {
     try {
-      return await modManager.searchMods(query, filters);
+      const validQuery = validateIpcParam(z.string().min(0).max(200), query, 'query');
+      const validFilters = validateIpcParam(modSearchFiltersSchema, filters, 'filters');
+      return await modManager.searchMods(validQuery, validFilters as ModSearchFilters);
     } catch (error) {
       log.error('Mods: Search failed', error);
       throw error;
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.MODS_INSTALL, async (_event, mod: Mod, version: ModVersion, gameVersion?: string) => {
+  ipcMain.handle(IPC_CHANNELS.MODS_INSTALL, async (_event, mod: unknown, version: unknown, gameVersion?: unknown) => {
     try {
-      log.info(`Mods: Installing ${mod.name} version ${version.versionNumber} for MC ${gameVersion || 'auto'}`);
-      await modManager.installMod(mod, version, (progress) => {
+      const validMod = validateIpcParam(modSchema, mod, 'mod');
+      const validVersion = validateIpcParam(modVersionSchema, version, 'modVersion');
+      const validGameVersion = gameVersion ? validateIpcParam(z.string().max(50), gameVersion, 'gameVersion') : undefined;
+      log.info(`Mods: Installing ${validMod.name} version ${validVersion.versionNumber} for MC ${validGameVersion || 'auto'}`);
+      await modManager.installMod(validMod as Mod, validVersion as ModVersion, (progress) => {
         mainWindow.webContents.send(IPC_CHANNELS.DOWNLOAD_PROGRESS, progress);
-      }, gameVersion);
+      }, validGameVersion);
     } catch (error) {
       log.error('Mods: Install failed', error);
       throw error;
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.MODS_UNINSTALL, async (_event, modId: string) => {
+  ipcMain.handle(IPC_CHANNELS.MODS_UNINSTALL, async (_event, modId: unknown) => {
     try {
-      log.info(`Mods: Uninstalling mod ${modId}`);
-      await modManager.uninstallMod(modId);
+      const id = validateIpcParam(z.string().min(1).max(200), modId, 'modId');
+      log.info(`Mods: Uninstalling mod ${id}`);
+      await modManager.uninstallMod(id);
     } catch (error) {
       log.error('Mods: Uninstall failed', error);
       throw error;
@@ -218,9 +246,10 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.MODS_GET_DEPENDENCIES, async (_event, modVersion: ModVersion) => {
+  ipcMain.handle(IPC_CHANNELS.MODS_GET_DEPENDENCIES, async (_event, modVersion: unknown) => {
     try {
-      return await modManager.getDependencies(modVersion);
+      const validVersion = validateIpcParam(modVersionSchema, modVersion, 'modVersion');
+      return await modManager.getDependencies(validVersion as ModVersion);
     } catch (error) {
       log.error('Mods: Get dependencies failed', error);
       throw error;
@@ -251,18 +280,20 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.MODS_ORGANIZE, async (_event, version: string) => {
+  ipcMain.handle(IPC_CHANNELS.MODS_ORGANIZE, async (_event, version: unknown) => {
     try {
-      await modManager.organizeMods(version);
+      const validVersion = validateIpcParam(z.string().min(1).max(50), version, 'version');
+      await modManager.organizeMods(validVersion);
     } catch (error) {
       log.error('Mods: Organize failed', error);
       throw error;
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.MODS_ACTIVATE_VERSION, async (_event, version: string) => {
+  ipcMain.handle(IPC_CHANNELS.MODS_ACTIVATE_VERSION, async (_event, version: unknown) => {
     try {
-      await modManager.activateModsForVersion(version);
+      const validVersion = validateIpcParam(z.string().min(1).max(50), version, 'version');
+      await modManager.activateModsForVersion(validVersion);
     } catch (error) {
       log.error('Mods: Activate version failed', error);
       throw error;
@@ -270,37 +301,46 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
   });
 
   // ==================== MODPACKS ====================
-  ipcMain.handle(IPC_CHANNELS.MODPACKS_SEARCH, async (_event, query: string, filters: ModpackSearchFilters) => {
+  ipcMain.handle(IPC_CHANNELS.MODPACKS_SEARCH, async (_event, query: unknown, filters: unknown) => {
     try {
-      return await modpackManager.searchModpacks(query, filters);
+      const validQuery = validateIpcParam(z.string().min(0).max(200), query, 'query');
+      const validFilters = validateIpcParam(modpackSearchFiltersSchema, filters, 'filters');
+      return await modpackManager.searchModpacks(validQuery, validFilters as ModpackSearchFilters);
     } catch (error) {
       log.error('Modpacks: Search failed', error);
       throw error;
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.MODPACKS_GET_DETAILS, async (_event, modpackId: string, source: 'curseforge' | 'modrinth') => {
+  ipcMain.handle(IPC_CHANNELS.MODPACKS_GET_DETAILS, async (_event, modpackId: unknown, source: unknown) => {
     try {
-      return await modpackManager.getModpackDetails(modpackId, source);
+      const id = validateIpcParam(z.string().min(1).max(200), modpackId, 'modpackId');
+      const validSource = validateIpcParam(sourceSchema, source, 'source');
+      return await modpackManager.getModpackDetails(id, validSource);
     } catch (error) {
       log.error('Modpacks: Get details failed', error);
       throw error;
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.MODPACKS_GET_FILES, async (_event, modpackId: string, source: 'curseforge' | 'modrinth', gameVersion?: string) => {
+  ipcMain.handle(IPC_CHANNELS.MODPACKS_GET_FILES, async (_event, modpackId: unknown, source: unknown, gameVersion?: unknown) => {
     try {
-      return await modpackManager.getModpackFiles(modpackId, source, gameVersion);
+      const id = validateIpcParam(z.string().min(1).max(200), modpackId, 'modpackId');
+      const validSource = validateIpcParam(sourceSchema, source, 'source');
+      const validGameVersion = gameVersion ? validateIpcParam(z.string().max(50), gameVersion, 'gameVersion') : undefined;
+      return await modpackManager.getModpackFiles(id, validSource, validGameVersion);
     } catch (error) {
       log.error('Modpacks: Get files failed', error);
       throw error;
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.MODPACKS_INSTALL, async (_event, modpack: Modpack, file: ModpackFile) => {
+  ipcMain.handle(IPC_CHANNELS.MODPACKS_INSTALL, async (_event, modpack: unknown, file: unknown) => {
     try {
-      log.info(`Modpacks: Installing ${modpack.name}`);
-      await modpackManager.installModpack(modpack, file, (progress) => {
+      const validModpack = validateIpcParam(modpackSchema, modpack, 'modpack');
+      const validFile = validateIpcParam(modpackFileSchema, file, 'modpackFile');
+      log.info(`Modpacks: Installing ${validModpack.name}`);
+      await modpackManager.installModpack(validModpack as Modpack, validFile as ModpackFile, (progress) => {
         mainWindow.webContents.send(IPC_CHANNELS.DOWNLOAD_PROGRESS, progress);
       });
     } catch (error) {
@@ -309,10 +349,11 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.MODPACKS_UNINSTALL, async (_event, modpackId: string) => {
+  ipcMain.handle(IPC_CHANNELS.MODPACKS_UNINSTALL, async (_event, modpackId: unknown) => {
     try {
-      log.info(`Modpacks: Uninstalling modpack ${modpackId}`);
-      await modpackManager.uninstallModpack(modpackId);
+      const id = validateIpcParam(z.string().min(1).max(200), modpackId, 'modpackId');
+      log.info(`Modpacks: Uninstalling modpack ${id}`);
+      await modpackManager.uninstallModpack(id);
     } catch (error) {
       log.error('Modpacks: Uninstall failed', error);
       throw error;
@@ -337,10 +378,11 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.MODPACKS_UPDATE, async (_event, modpackId: string) => {
+  ipcMain.handle(IPC_CHANNELS.MODPACKS_UPDATE, async (_event, modpackId: unknown) => {
     try {
-      log.info(`Modpacks: Updating modpack ${modpackId}`);
-      await modpackManager.updateModpack(modpackId, (progress) => {
+      const id = validateIpcParam(z.string().min(1).max(200), modpackId, 'modpackId');
+      log.info(`Modpacks: Updating modpack ${id}`);
+      await modpackManager.updateModpack(id, (progress) => {
         mainWindow.webContents.send(IPC_CHANNELS.DOWNLOAD_PROGRESS, progress);
       });
     } catch (error) {
@@ -349,9 +391,11 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.MODPACKS_SET_AUTO_UPDATE, async (_event, modpackId: string, enabled: boolean) => {
+  ipcMain.handle(IPC_CHANNELS.MODPACKS_SET_AUTO_UPDATE, async (_event, modpackId: unknown, enabled: unknown) => {
     try {
-      await modpackManager.setAutoUpdate(modpackId, enabled);
+      const id = validateIpcParam(z.string().min(1).max(200), modpackId, 'modpackId');
+      const validEnabled = validateIpcParam(z.boolean(), enabled, 'enabled');
+      await modpackManager.setAutoUpdate(id, validEnabled);
     } catch (error) {
       log.error('Modpacks: Set auto update failed', error);
       throw error;
@@ -359,10 +403,11 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
   });
 
   // ==================== LAUNCHER ====================
-  ipcMain.handle(IPC_CHANNELS.LAUNCHER_LAUNCH, async (_event, config: LaunchConfig) => {
+  ipcMain.handle(IPC_CHANNELS.LAUNCHER_LAUNCH, async (_event, config: unknown) => {
     try {
-      log.info(`Launcher: Launching Minecraft ${config.version}`);
-      await launcherService.launch(config);
+      const validConfig = validateIpcParam(launchConfigSchema, config, 'launchConfig');
+      log.info(`Launcher: Launching Minecraft ${validConfig.version}`);
+      await launcherService.launch(validConfig as LaunchConfig);
     } catch (error) {
       log.error('Launcher: Launch failed', error);
       throw error;
@@ -398,9 +443,10 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.SETTINGS_SET, async (_event, settings: Partial<LauncherSettings>) => {
+  ipcMain.handle(IPC_CHANNELS.SETTINGS_SET, async (_event, settings: unknown) => {
     try {
-      await settingsService.setSettings(settings);
+      const validSettings = validateIpcParam(settingsSchema, settings, 'settings');
+      await settingsService.setSettings(validSettings as Partial<LauncherSettings>);
     } catch (error) {
       log.error('Settings: Set failed', error);
       throw error;
@@ -428,23 +474,25 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.JAVA_GET_REQUIRED, async (_event, mcVersion: string) => {
+  ipcMain.handle(IPC_CHANNELS.JAVA_GET_REQUIRED, async (_event, mcVersion: unknown) => {
     try {
+      const validVersion = validateIpcParam(versionIdSchema, mcVersion, 'mcVersion');
       const { javaService } = await import('../services/JavaService');
-      return javaService.getRequiredJavaVersion(mcVersion);
+      return javaService.getRequiredJavaVersion(validVersion);
     } catch (error) {
       log.error('Java: Get required failed', error);
       throw error;
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.JAVA_DOWNLOAD, async (_event, version: number) => {
+  ipcMain.handle(IPC_CHANNELS.JAVA_DOWNLOAD, async (_event, version: unknown) => {
     try {
+      const validVersion = validateIpcParam(z.number().int().min(8).max(99), version, 'javaVersion');
       const { javaService } = await import('../services/JavaService');
-      return await javaService.downloadJava(version, (progress) => {
+      return await javaService.downloadJava(validVersion, (progress) => {
         mainWindow.webContents.send(IPC_CHANNELS.DOWNLOAD_PROGRESS, {
           type: 'java',
-          filename: `Java ${version}`,
+          filename: `Java ${validVersion}`,
           downloaded: progress.downloaded,
           total: progress.total,
           percentage: progress.percentage,
@@ -456,13 +504,14 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
     }
   });
 
-  ipcMain.handle(IPC_CHANNELS.JAVA_ENSURE, async (_event, mcVersion: string) => {
+  ipcMain.handle(IPC_CHANNELS.JAVA_ENSURE, async (_event, mcVersion: unknown) => {
     try {
+      const validVersion = validateIpcParam(versionIdSchema, mcVersion, 'mcVersion');
       const { javaService } = await import('../services/JavaService');
-      return await javaService.ensureJavaForMinecraft(mcVersion, (progress) => {
+      return await javaService.ensureJavaForMinecraft(validVersion, (progress) => {
         mainWindow.webContents.send(IPC_CHANNELS.DOWNLOAD_PROGRESS, {
           type: 'java',
-          filename: `Java dla MC ${mcVersion}`,
+          filename: `Java dla MC ${validVersion}`,
           downloaded: progress.downloaded,
           total: progress.total,
           percentage: progress.percentage,
@@ -528,7 +577,21 @@ export function setupIpcHandlers(mainWindow: BrowserWindow): void {
 
   // ==================== UTILS ====================
   ipcMain.handle('utils:openExternal', async (_event, url: string) => {
-    await shell.openExternal(url);
+    // VULN-001: Validate URL protocol — only allow HTTP(S)
+    try {
+      const parsed = new URL(url);
+      if (!['https:', 'http:'].includes(parsed.protocol)) {
+        log.warn(`Blocked openExternal with disallowed protocol: ${parsed.protocol}`);
+        throw new Error('Only HTTP and HTTPS URLs are allowed');
+      }
+      await shell.openExternal(url);
+    } catch (error) {
+      if (error instanceof TypeError) {
+        log.warn(`Blocked openExternal with invalid URL: ${url}`);
+        throw new Error('Invalid URL');
+      }
+      throw error;
+    }
   });
 
   ipcMain.handle('utils:selectDirectory', async () => {

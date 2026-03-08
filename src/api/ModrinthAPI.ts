@@ -275,6 +275,10 @@ export class ModrinthAPI {
       dependencies: version.dependencies.map((dep) => this.convertDependency(dep)),
       releaseType: version.version_type,
       datePublished: version.date_published,
+      hashes: primaryFile?.hashes ? {
+        sha1: primaryFile.hashes.sha1,
+        sha512: primaryFile.hashes.sha512,
+      } : undefined,
     };
   }
 

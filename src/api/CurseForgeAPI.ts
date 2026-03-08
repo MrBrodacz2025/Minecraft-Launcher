@@ -308,6 +308,7 @@ export class CurseForgeAPI {
       dependencies: file.dependencies.map((dep) => this.convertDependency(dep)),
       releaseType: this.getReleaseType(file.releaseType),
       datePublished: file.fileDate,
+      hashes: this.extractHashes(file.hashes),
     };
   }
 
@@ -334,6 +335,16 @@ export class CurseForgeAPI {
       case 3: return 'alpha';
       default: return 'release';
     }
+  }
+
+  private extractHashes(hashes: { value: string; algo: number }[]): { sha1?: string; sha512?: string } | undefined {
+    if (!hashes || hashes.length === 0) return undefined;
+    const result: { sha1?: string; sha512?: string } = {};
+    for (const h of hashes) {
+      if (h.algo === 1) result.sha1 = h.value; // SHA1
+      // CurseForge uses algo 2 for MD5, no SHA512 available
+    }
+    return Object.keys(result).length > 0 ? result : undefined;
   }
 
   private getModLoaderId(loader: LoaderType): number | null {

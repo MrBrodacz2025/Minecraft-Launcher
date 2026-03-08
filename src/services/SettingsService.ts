@@ -4,6 +4,26 @@ import log from 'electron-log';
 import { getLauncherDirectory, DEFAULT_SETTINGS } from '../shared/constants';
 import type { LauncherSettings } from '../shared/types';
 
+// VULN-007: Dangerous JVM argument patterns that could load arbitrary code
+const DANGEROUS_JVM_PATTERNS = [
+  /-javaagent:/i,
+  /-agentlib:/i,
+  /-agentpath:/i,
+  /-Xbootclasspath/i,
+  /-Xpatch:/i,
+  /--patch-module/i,
+];
+
+export function validateJvmArgs(args: string): { valid: boolean; warnings: string[] } {
+  const warnings: string[] = [];
+  for (const pattern of DANGEROUS_JVM_PATTERNS) {
+    if (pattern.test(args)) {
+      warnings.push(`Potentially dangerous JVM argument detected: ${pattern.source}`);
+    }
+  }
+  return { valid: warnings.length === 0, warnings };
+}
+
 export class SettingsService {
   private store: Store<LauncherSettings>;
 
@@ -37,6 +57,14 @@ export class SettingsService {
 
   async setSettings(settings: Partial<LauncherSettings>): Promise<void> {
     log.info('Updating settings:', settings);
+
+    // VULN-007: Warn about dangerous JVM arguments
+    if (settings.jvmArguments !== undefined) {
+      const { warnings } = validateJvmArgs(settings.jvmArguments);
+      if (warnings.length > 0) {
+        log.warn('[Settings] Dangerous JVM arguments detected:', warnings);
+      }
+    }
 
     for (const [key, value] of Object.entries(settings)) {
       if (value !== undefined) {

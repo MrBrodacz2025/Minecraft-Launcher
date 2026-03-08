@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/icon.png" alt="EnderGate" width="128" height="128" />
+  <img src="assets/github-icon.png" alt="EnderGate" width="128" height="128" />
 
   # EnderGate
 
@@ -13,7 +13,7 @@
 
   <br />
 
-  [📥 Download](#-installation) · [✨ Features](#-features) · [📖 Docs](#-architecture) · [🐛 Report Bug](https://github.com/your-github-username/minecraft-launcher/issues)
+  [📥 Download](#-installation) · [✨ Features](#-features) · [📖 Docs](#-architecture) · [🐛 Report Bug](https://github.com/MrBrodacz2025/Minecraft-Launcher/issues)
 
   ---
 </div>
@@ -144,7 +144,7 @@ cd EnderGate-*/
 
 <br />
 
-Download the latest release from **[Releases](https://github.com/your-github-username/minecraft-launcher/releases)**.
+Download the latest release from **[Releases](https://github.com/MrBrodacz2025/Minecraft-Launcher/releases)**.
 
 <br />
 
@@ -263,8 +263,8 @@ src/
 
 ```bash
 # Clone
-git clone https://github.com/your-github-username/minecraft-launcher.git
-cd minecraft-launcher
+git clone https://github.com/MrBrodacz2025/Minecraft-Launcher.git
+cd Minecraft-Launcher
 
 # Install dependencies
 npm install
@@ -436,7 +436,7 @@ This project is licensed under the **GNU General Public License v3.0** — see t
 
   <br />
 
-  [![GitHub Issues](https://img.shields.io/badge/Issues-Report_a_bug-red?style=flat-square&logo=github)](https://github.com/your-github-username/minecraft-launcher/issues)
-  [![GitHub Stars](https://img.shields.io/github/stars/your-github-username/minecraft-launcher?style=flat-square&logo=github)](https://github.com/your-github-username/minecraft-launcher)
+  [![GitHub Issues](https://img.shields.io/badge/Issues-Report_a_bug-red?style=flat-square&logo=github)](https://github.com/MrBrodacz2025/Minecraft-Launcher/issues)
+  [![GitHub Stars](https://img.shields.io/github/stars/MrBrodacz2025/Minecraft-Launcher?style=flat-square&logo=github)](https://github.com/MrBrodacz2025/Minecraft-Launcher)
 
 </div>

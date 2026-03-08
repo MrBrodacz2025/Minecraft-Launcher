@@ -138,7 +138,7 @@ npm run typecheck    # TypeScript check
 
 ## Project Links
 
-- Repository: [GitHub](https://github.com/your-username/minecraft-launcher)
+- Repository: [GitHub](https://github.com/MrBrodacz2025/Minecraft-Launcher)
 - CurseForge API: https://api.curseforge.com
 - Modrinth API: https://api.modrinth.com
 - Fabric API: https://meta.fabricmc.net

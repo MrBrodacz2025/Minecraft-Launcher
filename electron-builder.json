@@ -132,8 +132,8 @@
   "publish": [
     {
       "provider": "github",
-      "owner": "your-github-username",
-      "repo": "minecraft-launcher",
+      "owner": "MrBrodacz2025",
+      "repo": "Minecraft-Launcher",
       "releaseType": "release",
       "publishAutoUpdate": true
     }

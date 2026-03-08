@@ -35,3 +35,6 @@ coverage/
 *.tmp
 *.temp
 .cache/
+
+# Root PNG files (source/working files - actual assets are in assets/ and build/icons/)
+/*.png

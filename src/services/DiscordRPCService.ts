@@ -138,7 +138,7 @@ class DiscordRPCService {
 
     if (serverName) {
       activity.buttons = [
-        { label: 'Dołącz do serwera', url: 'https://discord.gg/mrbrodacz' }
+        { label: 'Dołącz do serwera', url: 'https://discord.gg/endergate' }
       ];
     }
 

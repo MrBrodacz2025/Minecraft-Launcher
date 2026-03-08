@@ -136,12 +136,6 @@ class DiscordRPCService {
       startTimestamp: Date.now()
     };
 
-    if (serverName) {
-      activity.buttons = [
-        { label: 'Dołącz do serwera', url: 'https://discord.gg/endergate' }
-      ];
-    }
-
     await this.setActivity(activity);
   }
 

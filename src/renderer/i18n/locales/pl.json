@@ -91,6 +91,7 @@
     "availableVersions": "Dostępne wersje",
     "website": "Strona paczki",
     "installSuccess": "Zainstalowano {name}",
+    "installing": "Instalowanie {name}...",
     "installFailed": "Nie udało się zainstalować {name}",
     "uninstallSuccess": "Paczka modów została usunięta",
     "uninstallFailed": "Nie udało się usunąć paczki modów",

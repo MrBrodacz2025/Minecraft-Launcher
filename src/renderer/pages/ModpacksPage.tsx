@@ -149,10 +149,14 @@ const ModpacksPage: React.FC<ModpacksPageProps> = ({ settings, profile }) => {
   };
 
   const handleInstallModpack = async (modpack: Modpack, file: ModpackFile) => {
+    // Close modal and switch to installed tab immediately
+    setSelectedModpack(null);
+    setActiveTab('installed');
+    toast(t('modpacks.installing', { name: modpack.name }), { icon: '📦' });
+
     try {
       await api.modpacks.install(modpack, file);
       toast.success(t('modpacks.installSuccess', { name: modpack.name }));
-      setSelectedModpack(null);
       loadInstalledModpacks();
     } catch (error) {
       console.error('Install failed:', error);

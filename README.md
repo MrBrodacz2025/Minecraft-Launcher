@@ -9,7 +9,7 @@
   [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
   [![React](https://img.shields.io/badge/React-18.2-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
   [![Tailwind](https://img.shields.io/badge/Tailwind-3.4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-  [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+  [![License](https://img.shields.io/badge/License-GPL--3.0-blue?style=for-the-badge)](LICENSE)
 
   <br />
 
@@ -412,7 +412,7 @@ Wkład do projektu jest mile widziany!
 
 ## 📄 Licencja
 
-Projekt wydany na licencji **MIT** — zobacz plik [LICENSE](LICENSE).
+Projekt wydany na licencji **GNU General Public License v3.0** — zobacz plik [LICENSE](LICENSE).
 
 <br />
 

@@ -7,7 +7,7 @@
     "name": "Mr_Brodacz",
     "email": "mrbrodacz@users.noreply.github.com"
   },
-  "license": "MIT",
+  "license": "GPL-3.0",
   "overrides": {
     "discord-rpc": {
       "register-scheme": "npm:noop-package@1.0.0"

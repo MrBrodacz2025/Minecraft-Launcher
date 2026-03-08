@@ -91,6 +91,7 @@
     "availableVersions": "Available versions",
     "website": "Modpack page",
     "installSuccess": "{name} has been installed",
+    "installing": "Installing {name}...",
     "installFailed": "Failed to install {name}",
     "uninstallSuccess": "Modpack has been uninstalled",
     "uninstallFailed": "Failed to uninstall modpack",

@@ -102,7 +102,12 @@
     "updateSuccess": "Paczka zaktualizowana pomyślnie",
     "updateFailed": "Nie udało się zaktualizować paczki",
     "autoUpdateOn": "Auto-aktualizacja włączona",
-    "autoUpdateOff": "Auto-aktualizacja wyłączona"
+    "autoUpdateOff": "Auto-aktualizacja wyłączona",
+    "play": "Graj",
+    "launching": "Uruchamianie {name}...",
+    "launchFailed": "Nie udało się uruchomić paczki {name}",
+    "versionNotInstalled": "Wersja Minecraft {version} nie jest zainstalowana. Zainstaluj ją najpierw na stronie głównej.",
+    "loginRequired": "Zaloguj się, aby uruchomić paczkę modów"
   },
   "settings": {
     "title": "Ustawienia",

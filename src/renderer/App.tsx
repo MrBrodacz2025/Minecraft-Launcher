@@ -172,7 +172,7 @@ const App: React.FC = () => {
                   transition={{ duration: 0.2 }}
                   className="h-full"
                 >
-                  <ModpacksPage settings={settings} />
+                  <ModpacksPage settings={settings} profile={profile} />
                 </motion.div>
               )}
 

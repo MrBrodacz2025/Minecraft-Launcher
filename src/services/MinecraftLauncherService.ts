@@ -113,29 +113,35 @@ export class MinecraftLauncherService {
       throw new Error(`Java nie została znaleziona. Zainstaluj Java 21 i ustaw ścieżkę w ustawieniach.`);
     }
 
-    // Activate mods for the selected version
-    try {
-      const { ModManager } = await import('../mod-manager/ModManager');
-      const { SettingsService } = await import('./SettingsService');
-      const settingsService = new SettingsService();
-      const modManager = new ModManager(settingsService);
-      
-      const loaderType = config.loader || 'fabric';
-      
-      // Ensure optimization mods are installed (Sodium, Lithium, FerriteCore, etc.)
-      await modManager.ensureOptimizationMods(config.version, loaderType);
-      
-      // Ensure menu customization mods are installed (FancyMenu, etc.)
-      await modManager.ensureMenuMods(config.version, loaderType);
-      
-      await modManager.activateModsForVersion(config.version);
-      log.info(`Mods activated for version ${config.version}`);
-    } catch (modsError) {
-      log.warn('Failed to activate mods:', modsError);
+    // Activate mods for the selected version (skip for modpack launches)
+    if (!config.modpackPath) {
+      try {
+        const { ModManager } = await import('../mod-manager/ModManager');
+        const { SettingsService } = await import('./SettingsService');
+        const settingsService = new SettingsService();
+        const modManager = new ModManager(settingsService);
+        
+        const loaderType = config.loader || 'fabric';
+        
+        // Ensure optimization mods are installed (Sodium, Lithium, FerriteCore, etc.)
+        await modManager.ensureOptimizationMods(config.version, loaderType);
+        
+        // Ensure menu customization mods are installed (FancyMenu, etc.)
+        await modManager.ensureMenuMods(config.version, loaderType);
+        
+        await modManager.activateModsForVersion(config.version);
+        log.info(`Mods activated for version ${config.version}`);
+      } catch (modsError) {
+        log.warn('Failed to activate mods:', modsError);
+      }
+    } else {
+      log.info(`Launching with modpack at: ${config.modpackPath}`);
     }
 
     // Build full command
     const args = [...jvmArgs, '-cp', classpath, versionDetails.mainClass, ...gameArgs];
+
+    const effectiveCwd = config.modpackPath || gameDirectory;
 
     log.info('Launching Minecraft...');
     log.info(`Main class: ${versionDetails.mainClass}`);
@@ -143,10 +149,13 @@ export class MinecraftLauncherService {
     log.info(`Full Java path: "${javaPath}"`);
     log.info(`Java exists: ${fs.existsSync(javaPath)}`);
     log.info(`First 5 args: ${args.slice(0, 5).join(' ')}`);
+    if (config.modpackPath) {
+      log.info(`Modpack game directory: ${config.modpackPath}`);
+    }
 
     try {
       this.gameProcess = spawn(javaPath, args, {
-        cwd: gameDirectory,
+        cwd: effectiveCwd,
         env: {
           ...process.env,
           JAVA_HOME: path.dirname(path.dirname(javaPath)),
@@ -481,12 +490,13 @@ export class MinecraftLauncherService {
     versionDetails: MinecraftVersionDetails
   ): string {
     const gameDirectory = config.settings.gameDirectory;
+    const effectiveGameDir = config.modpackPath || gameDirectory;
     const assetsDir = path.join(gameDirectory, 'assets');
 
     return arg
       .replace(/\${auth_player_name}/g, config.profile.name)
       .replace(/\${version_name}/g, versionDetails.id)
-      .replace(/\${game_directory}/g, gameDirectory)
+      .replace(/\${game_directory}/g, effectiveGameDir)
       .replace(/\${assets_root}/g, assetsDir)
       .replace(/\${assets_index_name}/g, versionDetails.assets || versionDetails.id)
       .replace(/\${auth_uuid}/g, config.profile.id)

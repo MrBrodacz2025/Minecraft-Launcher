@@ -171,6 +171,8 @@ export interface LaunchConfig {
   loaderVersion?: string;
   profile: MinecraftProfile;
   settings: LauncherSettings;
+  modpackPath?: string;
+  modpackName?: string;
 }
 
 export interface LauncherStatus {

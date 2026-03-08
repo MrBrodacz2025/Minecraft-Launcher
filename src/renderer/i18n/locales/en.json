@@ -102,7 +102,12 @@
     "updateSuccess": "Modpack updated successfully",
     "updateFailed": "Failed to update modpack",
     "autoUpdateOn": "Auto-update enabled",
-    "autoUpdateOff": "Auto-update disabled"
+    "autoUpdateOff": "Auto-update disabled",
+    "play": "Play",
+    "launching": "Launching {name}...",
+    "launchFailed": "Failed to launch modpack {name}",
+    "versionNotInstalled": "Minecraft version {version} is not installed. Install it first from the home page.",
+    "loginRequired": "Log in to launch a modpack"
   },
   "settings": {
     "title": "Settings",

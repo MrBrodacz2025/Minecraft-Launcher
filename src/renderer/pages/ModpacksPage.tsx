@@ -12,6 +12,7 @@ import {
   FiToggleRight,
   FiAlertCircle,
   FiArrowUp,
+  FiPlay,
 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
@@ -23,15 +24,17 @@ import type {
   InstalledModpack,
   ModpackSearchFilters,
   LauncherSettings,
+  MinecraftProfile,
   LoaderType,
   DownloadProgress as DownloadProgressType,
 } from '../types';
 
 interface ModpacksPageProps {
   settings: LauncherSettings | null;
+  profile: MinecraftProfile | null;
 }
 
-const ModpacksPage: React.FC<ModpacksPageProps> = ({ settings }) => {
+const ModpacksPage: React.FC<ModpacksPageProps> = ({ settings, profile }) => {
   const api = useElectronAPI();
   const { t } = useI18n();
 
@@ -45,6 +48,7 @@ const ModpacksPage: React.FC<ModpacksPageProps> = ({ settings }) => {
   const [showFilters, setShowFilters] = useState(false);
   const [downloadProgress, setDownloadProgress] = useState<DownloadProgressType | null>(null);
   const [isCheckingUpdates, setIsCheckingUpdates] = useState(false);
+  const [launchingModpackId, setLaunchingModpackId] = useState<string | null>(null);
 
   const [filters, setFilters] = useState<ModpackSearchFilters>({
     source: 'curseforge',
@@ -202,6 +206,37 @@ const ModpacksPage: React.FC<ModpacksPageProps> = ({ settings }) => {
       loadInstalledModpacks();
     } catch (error) {
       console.error('Toggle auto-update failed:', error);
+    }
+  };
+
+  const handleLaunchModpack = async (modpack: InstalledModpack) => {
+    if (!profile || !settings) {
+      toast.error(t('modpacks.loginRequired'));
+      return;
+    }
+
+    setLaunchingModpackId(modpack.id);
+    try {
+      await api.launcher.launch({
+        version: modpack.gameVersion,
+        loader: modpack.loader !== 'vanilla' ? modpack.loader : undefined,
+        loaderVersion: undefined,
+        profile,
+        settings,
+        modpackPath: modpack.installPath,
+        modpackName: modpack.name,
+      });
+      toast.success(t('modpacks.launching', { name: modpack.name }));
+    } catch (error: any) {
+      console.error('Modpack launch failed:', error);
+      const msg = error?.message || '';
+      if (msg.includes('nie jest zainstalowana') || msg.includes('not installed')) {
+        toast.error(t('modpacks.versionNotInstalled', { version: modpack.gameVersion }));
+      } else {
+        toast.error(t('modpacks.launchFailed', { name: modpack.name }));
+      }
+    } finally {
+      setLaunchingModpackId(null);
     }
   };
 
@@ -474,6 +509,21 @@ const ModpacksPage: React.FC<ModpacksPageProps> = ({ settings }) => {
                   </div>
 
                   <div className="flex items-center gap-2 flex-shrink-0">
+                    {/* Play button */}
+                    <button
+                      onClick={() => handleLaunchModpack(modpack)}
+                      disabled={launchingModpackId !== null || !profile}
+                      className="px-4 py-2 bg-green-600 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors flex items-center gap-2 font-medium"
+                      title={t('modpacks.play')}
+                    >
+                      {launchingModpackId === modpack.id ? (
+                        <FiRefreshCw className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <FiPlay className="w-4 h-4" />
+                      )}
+                      {t('modpacks.play')}
+                    </button>
+
                     {/* Auto-update toggle */}
                     <button
                       onClick={() => handleToggleAutoUpdate(modpack.id, modpack.autoUpdate)}

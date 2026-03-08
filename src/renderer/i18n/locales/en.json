@@ -111,6 +111,11 @@
     "autoInstalling": "Automatically installing Minecraft {version}...",
     "autoInstallSuccess": "Minecraft {version} installed successfully",
     "autoInstallFailed": "Failed to automatically install Minecraft {version}",
+    "checkingLoader": "Checking {loader} loader...",
+    "installingLoader": "Installing {loader} {loaderVersion}...",
+    "loaderInstalled": "{loader} loader installed successfully",
+    "loaderNotAvailable": "{loader} loader is not available for version {version}",
+    "loaderInstallFailed": "Failed to install {loader} loader",
     "loginRequired": "Log in to launch a modpack"
   },
   "settings": {

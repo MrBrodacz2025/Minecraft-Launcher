@@ -232,36 +232,71 @@ export class MinecraftLauncherService {
 
   private getVersionId(config: LaunchConfig): string {
     // For non-vanilla loaders, check if the loader version exists
-    if (config.loader && config.loader !== 'vanilla' && config.loaderVersion) {
-      let loaderVersionId: string;
-      switch (config.loader) {
-        case 'fabric':
-          loaderVersionId = `fabric-loader-${config.loaderVersion}-${config.version}`;
-          break;
-        case 'forge':
-          loaderVersionId = `${config.version}-forge-${config.loaderVersion}`;
-          break;
-        case 'neoforge':
-          loaderVersionId = `${config.version}-neoforge-${config.loaderVersion}`;
-          break;
-        default:
-          return config.version;
+    if (config.loader && config.loader !== 'vanilla') {
+      // If loaderVersion is provided, build the exact version ID
+      if (config.loaderVersion) {
+        let loaderVersionId: string;
+        switch (config.loader) {
+          case 'fabric':
+            loaderVersionId = `fabric-loader-${config.loaderVersion}-${config.version}`;
+            break;
+          case 'forge':
+            loaderVersionId = `${config.version}-forge-${config.loaderVersion}`;
+            break;
+          case 'neoforge':
+            loaderVersionId = `${config.version}-neoforge-${config.loaderVersion}`;
+            break;
+          default:
+            return config.version;
+        }
+        
+        // Check if loader version exists
+        const loaderVersionPath = path.join(
+          config.settings.gameDirectory,
+          'versions',
+          loaderVersionId,
+          `${loaderVersionId}.json`
+        );
+        
+        if (fs.existsSync(loaderVersionPath)) {
+          return loaderVersionId;
+        } else {
+          log.warn(`Loader version ${loaderVersionId} not found, searching for any installed ${config.loader} loader`);
+        }
       }
-      
-      // Check if loader version exists
-      const loaderVersionPath = path.join(
-        config.settings.gameDirectory,
-        'versions',
-        loaderVersionId,
-        `${loaderVersionId}.json`
-      );
-      
-      if (fs.existsSync(loaderVersionPath)) {
-        return loaderVersionId;
-      } else {
-        log.warn(`Loader version ${loaderVersionId} not found, falling back to vanilla ${config.version}`);
-        // Fall back to vanilla
+
+      // Fallback: search for any installed loader version for this MC version
+      const versionsDir = path.join(config.settings.gameDirectory, 'versions');
+      if (fs.existsSync(versionsDir)) {
+        try {
+          const entries = fs.readdirSync(versionsDir);
+          for (const entry of entries) {
+            let matches = false;
+            switch (config.loader) {
+              case 'fabric':
+                matches = entry.startsWith('fabric-loader-') && entry.endsWith(`-${config.version}`);
+                break;
+              case 'forge':
+                matches = entry.startsWith(`${config.version}-forge-`);
+                break;
+              case 'neoforge':
+                matches = entry.startsWith(`${config.version}-neoforge-`);
+                break;
+            }
+            if (matches) {
+              const jsonPath = path.join(versionsDir, entry, `${entry}.json`);
+              if (fs.existsSync(jsonPath)) {
+                log.info(`Found installed loader version: ${entry}`);
+                return entry;
+              }
+            }
+          }
+        } catch (e) {
+          log.warn('Failed to scan versions directory:', e);
+        }
       }
+
+      log.warn(`No ${config.loader} loader found for ${config.version}, falling back to vanilla`);
     }
     return config.version;
   }

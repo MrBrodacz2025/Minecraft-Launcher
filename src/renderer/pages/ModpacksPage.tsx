@@ -221,7 +221,7 @@ const ModpacksPage: React.FC<ModpacksPageProps> = ({ settings, profile }) => {
 
     setLaunchingModpackId(modpack.id);
     try {
-      // Check if the base Minecraft version is installed, auto-install if missing
+      // Step 1: Check if the base Minecraft version is installed, auto-install if missing
       const installedVersions: string[] = await api.versions.getInstalled();
       if (!installedVersions.includes(modpack.gameVersion)) {
         toast.loading(t('modpacks.autoInstalling', { version: modpack.gameVersion }), { id: 'auto-install' });
@@ -235,10 +235,67 @@ const ModpacksPage: React.FC<ModpacksPageProps> = ({ settings, profile }) => {
         }
       }
 
+      // Step 2: Ensure the required loader is installed and get its version
+      let resolvedLoaderVersion: string | undefined;
+      const loaderType = modpack.loader !== 'vanilla' ? modpack.loader : undefined;
+
+      if (loaderType) {
+        toast.loading(t('modpacks.checkingLoader', { loader: loaderType }), { id: 'loader-check' });
+        try {
+          const availableLoaders = await api.loaders.getAvailable(modpack.gameVersion);
+          const matchingLoaders = availableLoaders.filter(
+            (l: any) => l.loader === loaderType
+          );
+
+          if (matchingLoaders.length === 0) {
+            toast.error(t('modpacks.loaderNotAvailable', { loader: loaderType, version: modpack.gameVersion }), { id: 'loader-check' });
+            return;
+          }
+
+          // Pick stable version first, otherwise first available
+          const bestLoader = matchingLoaders.find((l: any) => l.stable) || matchingLoaders[0];
+          resolvedLoaderVersion = bestLoader.version;
+
+          // Check if this loader version is already installed (version folder exists)
+          const updatedInstalled: string[] = await api.versions.getInstalled();
+          let loaderInstalled = false;
+          for (const v of updatedInstalled) {
+            if (loaderType === 'fabric' && v.startsWith(`fabric-loader-`) && v.endsWith(`-${modpack.gameVersion}`)) {
+              resolvedLoaderVersion = v.replace(`fabric-loader-`, '').replace(`-${modpack.gameVersion}`, '');
+              loaderInstalled = true;
+              break;
+            }
+            if (loaderType === 'forge' && v.startsWith(`${modpack.gameVersion}-forge-`)) {
+              resolvedLoaderVersion = v.replace(`${modpack.gameVersion}-forge-`, '');
+              loaderInstalled = true;
+              break;
+            }
+            if (loaderType === 'neoforge' && v.startsWith(`${modpack.gameVersion}-neoforge-`)) {
+              resolvedLoaderVersion = v.replace(`${modpack.gameVersion}-neoforge-`, '');
+              loaderInstalled = true;
+              break;
+            }
+          }
+
+          if (!loaderInstalled) {
+            toast.loading(t('modpacks.installingLoader', { loader: loaderType, loaderVersion: resolvedLoaderVersion }), { id: 'loader-check' });
+            await api.loaders.install(loaderType, modpack.gameVersion, resolvedLoaderVersion);
+            toast.success(t('modpacks.loaderInstalled', { loader: loaderType }), { id: 'loader-check' });
+          } else {
+            toast.dismiss('loader-check');
+          }
+        } catch (loaderError: any) {
+          console.error('Loader setup failed:', loaderError);
+          toast.error(t('modpacks.loaderInstallFailed', { loader: loaderType }), { id: 'loader-check' });
+          return;
+        }
+      }
+
+      // Step 3: Launch with the resolved loader version
       await api.launcher.launch({
         version: modpack.gameVersion,
-        loader: modpack.loader !== 'vanilla' ? modpack.loader : undefined,
-        loaderVersion: undefined,
+        loader: loaderType,
+        loaderVersion: resolvedLoaderVersion,
         profile,
         settings,
         modpackPath: modpack.installPath,

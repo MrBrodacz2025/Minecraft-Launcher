@@ -111,6 +111,11 @@
     "autoInstalling": "Automatyczna instalacja Minecraft {version}...",
     "autoInstallSuccess": "Minecraft {version} zainstalowany pomyślnie",
     "autoInstallFailed": "Nie udało się automatycznie zainstalować Minecraft {version}",
+    "checkingLoader": "Sprawdzanie loadera {loader}...",
+    "installingLoader": "Instalowanie {loader} {loaderVersion}...",
+    "loaderInstalled": "Loader {loader} zainstalowany pomyślnie",
+    "loaderNotAvailable": "Loader {loader} nie jest dostępny dla wersji {version}",
+    "loaderInstallFailed": "Nie udało się zainstalować loadera {loader}",
     "loginRequired": "Zaloguj się, aby uruchomić paczkę modów"
   },
   "settings": {

@@ -1,339 +1,442 @@
-# 🎮 Mr_Brodacz - CLIENT
+<div align="center">
+  <img src="assets/icon.png" alt="Mr_Brodacz - CLIENT" width="128" height="128" />
 
-Nowoczesny, nieoficjalny launcher do Minecraft Java Edition zbudowany z Electron, TypeScript, React i Tailwind CSS.
+  # Mr_Brodacz — CLIENT
 
-![Mr_Brodacz - CLIENT](https://via.placeholder.com/800x500/1a1b26/7aa2f7?text=Mr_Brodacz+CLIENT)
+  **Nowoczesny, nieoficjalny launcher do Minecraft Java Edition**
+
+  [![Electron](https://img.shields.io/badge/Electron-40.x-47848F?style=for-the-badge&logo=electron&logoColor=white)](https://www.electronjs.org/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+  [![React](https://img.shields.io/badge/React-18.2-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+  [![Tailwind](https://img.shields.io/badge/Tailwind-3.4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+  [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+
+  <br />
+
+  [📥 Pobierz](#-instalacja) · [✨ Funkcje](#-funkcje) · [📖 Dokumentacja](#-architektura) · [🐛 Zgłoś błąd](https://github.com/your-github-username/minecraft-launcher/issues)
+
+  ---
+</div>
+
+<br />
+
+> [!NOTE]
+> Mr_Brodacz — CLIENT wymaga ważnej licencji Minecraft Java Edition i konta Microsoft do logowania.
+
+<br />
 
 ## ✨ Funkcje
 
-- 🔐 **Logowanie Microsoft** - Pełna obsługa OAuth2 przez Xbox Live z szyfrowanym przechowywaniem tokenów
-- 📦 **Minecraft 1.17.2+** - Obsługa wszystkich wersji od 1.17.2 wzwyż
-- 🧩 **Mod Loadery** - Fabric, Forge, NeoForge z automatycznym wykrywaniem
-- 🎨 **Mody** - Integracja z CurseForge i Modrinth
-- 📦 **Paczki modów** - Przeglądanie i instalacja paczek modów z CurseForge z auto-aktualizacją
-- 🔄 **Auto-aktualizacje** - Automatyczne aktualizacje launchera i paczek modów
-- 📊 **Status serwerów** - Sprawdzanie statusu serwerów Mojang w czasie rzeczywistym
-- 🎯 **Nowoczesny UI** - React + Tailwind CSS z płynnymi animacjami
-- 🔒 **Bezpieczeństwo** - contextBridge z izolacją kontekstu, szyfrowane poświadczenia
-- 🎮 **Discord Rich Presence** - Pokaż swój status gry na Discordzie
-- ☕ **Zarządzanie Java** - Automatyczne wykrywanie i pobieranie wersji Java
-- 🌍 **Wielojęzyczność** - Wbudowane: Polski i Angielski, obsługa własnych tłumaczeń
-- 🎨 **Personalizacja** - Własne kolory akcentu i motywy
+<table>
+<tr>
+<td width="50%">
 
----
+### 🎮 Gra
+- Obsługa **Minecraft 1.17.2+** — wszystkie wersje
+- **Fabric, Forge, NeoForge** — automatyczne wykrywanie
+- **Paczki modów** — przeglądanie, instalacja i **uruchamianie jednym kliknięciem**
+- **Auto-aktualizacja** paczek modów z CurseForge
+- **Discord Rich Presence** — pokaż status gry
+
+</td>
+<td width="50%">
+
+### 🧩 Mody i paczki
+- Integracja z **CurseForge** i **Modrinth**
+- Wyszukiwanie, filtrowanie i sortowanie
+- Pobieranie modów z automatyczną weryfikacją
+- Instalacja paczek modów z pełnym zarządzaniem
+- **Graj** bezpośrednio z zainstalowanej paczki
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 🔒 Bezpieczeństwo
+- Logowanie **Microsoft OAuth2** przez Xbox Live
+- **Szyfrowane** przechowywanie tokenów (DPAPI/Keychain)
+- **Context Isolation** + Sandbox
+- Brak `nodeIntegration` w rendererze
+- Weryfikacja hash pobranych plików
+
+</td>
+<td width="50%">
+
+### 🎨 Interfejs
+- **React** + **Tailwind CSS** — nowoczesny design
+- Płynne **animacje** (Framer Motion)
+- **Wielojęzyczność** — PL, EN + własne tłumaczenia
+- Personalizacja **kolorów akcentu**
+- Panel konsoli i system powiadomień
+
+</td>
+</tr>
+</table>
+
+<br />
 
 ## 📥 Instalacja
 
-### Windows
+### <img src="https://raw.githubusercontent.com/ArmynC/ArminC-AutoExec/refs/heads/master/data/windows.svg" width="16" /> Windows
 
-#### Opcja 1: Instalator (zalecane)
-1. Pobierz najnowszą wersję z [Releases](https://github.com/your-github-username/minecraft-launcher/releases)
-2. Wybierz plik `Mr_Brodacz-CLIENT-Setup-X.X.X.exe`
-3. Uruchom instalator i postępuj zgodnie z instrukcjami
-4. Launcher zostanie zainstalowany i pojawi się skrót na pulpicie
+| Wariant | Opis | Plik |
+|---------|------|------|
+| **Instalator** *(zalecane)* | NSIS — skrót na pulpicie, menu start, deinstalator | `Mr_Brodacz-CLIENT-Setup-X.X.X.exe` |
+| **Portable** | Bez instalacji — uruchom z dowolnej lokalizacji | `Mr_Brodacz-CLIENT-X.X.X-portable.exe` |
 
-#### Opcja 2: Portable (bez instalacji)
-1. Pobierz `Mr_Brodacz-CLIENT-X.X.X.exe` (wersja portable)
-2. Umieść plik w wybranym folderze
-3. Uruchom — gotowe do pracy, bez instalacji
-
-#### Wymagania Windows:
-- Windows 10 lub nowszy (64-bit)
-- 4 GB RAM minimum
-- Konto Microsoft z licencją Minecraft Java Edition
+> Wymagania: Windows 10+ (64-bit) · 4 GB RAM · Konto Microsoft z MC Java
 
 ---
 
-### Linux
+### <img src="https://raw.githubusercontent.com/ArmynC/ArminC-AutoExec/refs/heads/master/data/linux.svg" width="16" /> Linux
 
-#### Opcja 1: AppImage (uniwersalna, zalecane)
+| Wariant | Dystrybucje | Plik |
+|---------|------------|------|
+| **AppImage** *(zalecane)* | Wszystkie | `Mr_Brodacz-CLIENT-X.X.X-x86_64.AppImage` |
+| **DEB** | Debian, Ubuntu, Mint | `Mr_Brodacz-CLIENT-X.X.X-amd64.deb` |
+| **RPM** | Fedora, RHEL, CentOS | `Mr_Brodacz-CLIENT-X.X.X-x86_64.rpm` |
+| **tar.gz** | Wszystkie (ręcznie) | `Mr_Brodacz-CLIENT-X.X.X-x64.tar.gz` |
+
+<details>
+<summary><b>Instrukcje instalacji</b></summary>
+
+**AppImage:**
 ```bash
-# Pobierz z Releases
-wget https://github.com/your-github-username/minecraft-launcher/releases/latest/download/Mr_Brodacz-CLIENT-X.X.X.AppImage
-
-# Nadaj uprawnienia do wykonywania
 chmod +x Mr_Brodacz-CLIENT-*.AppImage
-
-# Uruchom
 ./Mr_Brodacz-CLIENT-*.AppImage
 ```
 
-> **Uwaga:** Na niektórych dystrybucjach może być potrzebna flaga `--no-sandbox`
-
-#### Opcja 2: DEB (Debian, Ubuntu, Mint)
+**DEB (Debian/Ubuntu/Mint):**
 ```bash
-# Pobierz plik .deb z Releases
-wget https://github.com/your-github-username/minecraft-launcher/releases/latest/download/Mr_Brodacz-CLIENT-X.X.X-amd64.deb
-
-# Zainstaluj
 sudo dpkg -i Mr_Brodacz-CLIENT-*.deb
-
-# Napraw zależności jeśli potrzeba
-sudo apt-get install -f
-
-# Uruchom z menu lub terminala
-minecraft-launcher
+sudo apt-get install -f   # napraw zależności
 ```
 
-#### Opcja 3: RPM (Fedora, CentOS, RHEL)
+**RPM (Fedora/RHEL):**
 ```bash
-# Pobierz plik .rpm z Releases
-wget https://github.com/your-github-username/minecraft-launcher/releases/latest/download/Mr_Brodacz-CLIENT-X.X.X-x86_64.rpm
-
-# Zainstaluj
-sudo rpm -i Mr_Brodacz-CLIENT-*.rpm
-# lub z dnf
 sudo dnf install Mr_Brodacz-CLIENT-*.rpm
-
-# Uruchom
-minecraft-launcher
 ```
 
-#### Opcja 4: tar.gz (ręczna instalacja)
+**tar.gz:**
 ```bash
-# Pobierz i rozpakuj
-wget https://github.com/your-github-username/minecraft-launcher/releases/latest/download/Mr_Brodacz-CLIENT-X.X.X-x64.tar.gz
 tar -xzf Mr_Brodacz-CLIENT-*.tar.gz
 cd Mr_Brodacz-CLIENT-*/
-
-# Uruchom
-./minecraft-launcher
+./mr-brodacz-client
 ```
 
-#### Wymagania Linux:
-- Dystrybucja bazowana na glibc (Ubuntu 20.04+, Fedora 34+, etc.)
-- 64-bit (x86_64)
-- 4 GB RAM minimum
-- Konto Microsoft z licencją Minecraft Java Edition
+</details>
+
+> Wymagania: x86_64 · glibc (Ubuntu 20.04+, Fedora 34+) · 4 GB RAM
 
 ---
 
-### macOS
+### <img src="https://raw.githubusercontent.com/ArmynC/ArminC-AutoExec/refs/heads/master/data/macos.svg" width="16" /> macOS
 
-#### Opcja 1: DMG (zalecane)
-1. Pobierz `Mr_Brodacz-CLIENT-X.X.X-arm64.dmg` (Apple Silicon) lub `Mr_Brodacz-CLIENT-X.X.X-x64.dmg` (Intel)
-2. Otwórz plik DMG
-3. Przeciągnij aplikację do folderu Applications
-4. Uruchom z Launchpada lub Spotlight
+| Wariant | Opis | Plik |
+|---------|------|------|
+| **DMG** *(zalecane)* | Przeciągnij do Applications | `Mr_Brodacz-CLIENT-X.X.X-{arch}.dmg` |
+| **ZIP** | Rozpakuj i uruchom | `Mr_Brodacz-CLIENT-X.X.X-{arch}.zip` |
 
-#### Opcja 2: ZIP
-1. Pobierz plik `.zip` z Releases
-2. Rozpakuj i przenieś do Applications
+> Obsługiwane architektury: **Apple Silicon** (M1/M2/M3/M4) i **Intel x64**
+>
+> Przy pierwszym uruchomieniu: *Ustawienia systemowe → Prywatność i bezpieczeństwo → Otwórz mimo to*
 
-> **Uwaga:** Przy pierwszym uruchomieniu macOS może wyświetlić ostrzeżenie o nieznanym deweloperze.
-> Wejdź w **Ustawienia systemowe → Prywatność i bezpieczeństwo** i kliknij "Otwórz mimo to".
+<br />
 
-#### Wymagania macOS:
-- macOS 11 (Big Sur) lub nowszy
-- Apple Silicon (M1/M2/M3) lub Intel
-- 4 GB RAM minimum
-- Konto Microsoft z licencją Minecraft Java Edition
+Pobierz najnowszą wersję z **[Releases](https://github.com/your-github-username/minecraft-launcher/releases)**.
 
----
+<br />
+
+## 🏗️ Architektura
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                        Electron App                          │
+├────────────────────────┬─────────────────────────────────────┤
+│     Main Process       │           Renderer Process          │
+│  ┌──────────────────┐  │  ┌───────────────────────────────┐  │
+│  │   main.ts        │  │  │   React 18 + Tailwind CSS     │  │
+│  │   ipc.ts         │◄─┼──┤   App.tsx                     │  │
+│  │   preload.ts     │  │  │   ├── HomePage.tsx             │  │
+│  └──────┬───────────┘  │  │   ├── ModsPage.tsx             │  │
+│         │              │  │   ├── ModpacksPage.tsx  ← GRAJ │  │
+│  ┌──────▼───────────┐  │  │   └── SettingsPage.tsx         │  │
+│  │   Services       │  │  └───────────────────────────────┘  │
+│  │  Auth / Launcher │  │                                     │
+│  │  Versions / Java │  ├─────────────────────────────────────┤
+│  │  Settings / RPC  │  │           Shared                    │
+│  │  ModManager      │  │  ┌───────────────────────────────┐  │
+│  │  ModpackManager  │  │  │   types.ts · constants.ts     │  │
+│  └──────────────────┘  │  └───────────────────────────────┘  │
+├────────────────────────┴─────────────────────────────────────┤
+│                        API Layer                             │
+│   Minecraft · Fabric · Forge · NeoForge · CurseForge · MR   │
+└──────────────────────────────────────────────────────────────┘
+```
+
+<details>
+<summary><b>Pełna struktura katalogów</b></summary>
+
+```
+src/
+├── main/                   # Proces główny Electron
+│   ├── main.ts             # Punkt wejściowy
+│   ├── preload.ts          # Context bridge (IPC)
+│   └── ipc.ts              # Handlery komunikacji
+├── renderer/               # Frontend React
+│   ├── components/         # Sidebar, TitleBar, Console, ...
+│   ├── pages/              # Home, Mods, Modpacks, Settings
+│   ├── hooks/              # useElectronAPI, useNotifications
+│   ├── i18n/               # Tłumaczenia (pl, en, ...)
+│   └── styles/             # Tailwind globals
+├── api/                    # Klienci API
+│   ├── MinecraftAPI.ts     # Mojang (wersje, assety)
+│   ├── CurseForgeAPI.ts    # Mody + paczki modów
+│   ├── ModrinthAPI.ts      # Modrinth mody
+│   ├── FabricAPI.ts        # Fabric loader
+│   ├── ForgeAPI.ts         # Forge loader
+│   └── NeoForgeAPI.ts      # NeoForge loader
+├── services/               # Logika biznesowa
+│   ├── AuthService.ts      # Microsoft OAuth2
+│   ├── MinecraftLauncherService.ts  # Uruchamianie gry
+│   ├── VersionManager.ts   # Zarządzanie wersjami
+│   ├── JavaService.ts      # Auto-pobieranie Java
+│   ├── SettingsService.ts  # Ustawienia
+│   ├── SecureStorageService.ts  # Szyfrowanie tokenów
+│   ├── DiscordRPCService.ts     # Discord integration
+│   └── StatusService.ts    # Status serwerów
+├── mod-manager/
+│   ├── ModManager.ts       # Zarządzanie modami
+│   └── ModpackManager.ts   # Paczki modów + uruchamianie
+├── loader-manager/
+│   └── LoaderManager.ts    # Fabric / Forge / NeoForge
+├── updater/
+│   └── UpdaterService.ts   # Auto-aktualizacje
+└── shared/
+    ├── types.ts            # Współdzielone interfejsy
+    └── constants.ts        # Kanały IPC, stałe
+```
+
+</details>
+
+<br />
+
+## 🛠️ Stack technologiczny
+
+<table>
+<tr>
+  <td align="center" width="96"><img src="https://cdn.jsdelivr.net/gh/nicehash/ts-icongen@master/data/svg/frameworks/electron.svg" width="48" height="48" alt="Electron" /><br /><sub><b>Electron 40</b></sub></td>
+  <td align="center" width="96"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="48" height="48" alt="TypeScript" /><br /><sub><b>TypeScript 5.3</b></sub></td>
+  <td align="center" width="96"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="48" height="48" alt="React" /><br /><sub><b>React 18</b></sub></td>
+  <td align="center" width="96"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" width="48" height="48" alt="Tailwind" /><br /><sub><b>Tailwind 3.4</b></sub></td>
+  <td align="center" width="96"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/webpack/webpack-original.svg" width="48" height="48" alt="Webpack" /><br /><sub><b>Webpack 5</b></sub></td>
+</tr>
+</table>
+
+| Kategoria | Technologia | Opis |
+|:---------:|:-----------:|:-----|
+| 🖥️ Desktop | Electron 40 | Framework aplikacji desktopowej |
+| 🔤 Język | TypeScript 5.3 | Ścisłe typowanie w całym projekcie |
+| ⚛️ UI | React 18.2 | Komponenty funkcyjne + hooks |
+| 🎨 Style | Tailwind CSS 3.4 | Utility-first, ciemny motyw |
+| 📦 Bundler | Webpack 5.90 | Budowanie renderer + HMR |
+| 🔐 Auth | msmc | Microsoft OAuth2 / Xbox Live |
+| 💾 Storage | electron-store | Szyfrowane dane + ustawienia |
+| 🔄 Updater | electron-updater | Auto-aktualizacje z GitHub |
+| 🎬 Animacje | Framer Motion | Płynne przejścia stron |
+| 🔔 Toasty | React Hot Toast | Powiadomienia UI |
+| 🎮 Discord | discord-rpc | Rich Presence |
+| 📦 ZIP | AdmZip | Ekstrakcja paczek modów |
+
+<br />
 
 ## 🔨 Budowanie ze źródeł
 
-### Wymagania do budowania
-- **Node.js 18+** (zalecane 20 LTS)
-- **npm** lub **yarn**
+### Wymagania
+
+- **Node.js 18+** (zalecane 22 LTS)
+- **npm 10+**
 - **Git**
 
-### Instalacja zależności i uruchomienie
+### Szybki start
 
 ```bash
-# Klonowanie repozytorium
+# Klonowanie
 git clone https://github.com/your-github-username/minecraft-launcher.git
 cd minecraft-launcher
 
 # Instalacja zależności
 npm install
 
-# Uruchomienie w trybie deweloperskim (hot reload)
+# Tryb deweloperski (hot reload)
 npm run dev
 ```
 
-### Budowanie dystrybucyjne
+### Budowanie dystrybucji
 
 ```bash
-# Budowanie dla Windows (EXE installer + portable)
-npm run dist:win
-
-# Budowanie dla Linux (AppImage + DEB + RPM + tar.gz)
-npm run dist:linux
-
-# Budowanie dla macOS (DMG + ZIP)
-npm run dist:mac
-
-# Budowanie dla wszystkich platform
-npm run dist
+npm run dist:win     # Windows — NSIS + portable EXE
+npm run dist:linux   # Linux — AppImage + DEB + RPM + tar.gz
+npm run dist:mac     # macOS — DMG + ZIP (x64 + arm64)
+npm run dist         # Wszystkie platformy
 ```
 
-Zbudowane pliki znajdziesz w folderze `dist-app/`.
+Artefakty trafiają do `dist-app/`.
 
----
+### CI/CD
 
-## 🏗️ Architektura
+Projekt zawiera workflow **GitHub Actions** (`.github/workflows/build.yml`) który automatycznie buduje dla wszystkich platform przy tagowaniu:
 
-```
-minecraft-launcher/
-├── src/
-│   ├── main/               # Proces główny Electron
-│   │   ├── main.ts         # Punkt wejściowy
-│   │   ├── preload.ts      # Context bridge
-│   │   └── ipc.ts          # Handlery IPC
-│   ├── renderer/           # Frontend React
-│   │   ├── components/     # Komponenty UI
-│   │   ├── pages/          # Strony aplikacji
-│   │   │   ├── HomePage.tsx
-│   │   │   ├── ModsPage.tsx
-│   │   │   ├── ModpacksPage.tsx  # Paczki modów
-│   │   │   └── SettingsPage.tsx
-│   │   ├── hooks/          # Custom hooks
-│   │   └── styles/         # Pliki CSS
-│   ├── api/                # Klienci API
-│   │   ├── MinecraftAPI.ts
-│   │   ├── FabricAPI.ts
-│   │   ├── ForgeAPI.ts
-│   │   ├── NeoForgeAPI.ts
-│   │   ├── CurseForgeAPI.ts  # Mody + Paczki modów
-│   │   └── ModrinthAPI.ts
-│   ├── services/           # Serwisy
-│   ├── mod-manager/        # Zarządzanie modami
-│   │   ├── ModManager.ts
-│   │   └── ModpackManager.ts  # Zarządzanie paczkami modów
-│   ├── loader-manager/     # Zarządzanie loaderami
-│   ├── updater/            # Auto-aktualizacje
-│   └── shared/             # Współdzielone typy i stałe
-├── build/                  # Zasoby do budowania
-├── scripts/                # Skrypty pomocnicze
-├── electron-builder.json   # Konfiguracja budowania
-└── package.json
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+# → GitHub Actions zbuduje Windows + Linux + macOS i utworzy draft Release
 ```
 
-## 🛠️ Technologie
-
-| Kategoria | Technologia |
-|-----------|------------|
-| Framework | Electron 40.x |
-| Język | TypeScript 5.3 |
-| Frontend | React 18.2 |
-| Stylowanie | Tailwind CSS 3.4 |
-| Bundler | Webpack 5.90 |
-| Autoryzacja | msmc (Microsoft) |
-| Aktualizacje | electron-updater |
-| Magazynowanie | electron-store |
-| Animacje | Framer Motion |
-| Powiadomienia | React Hot Toast |
-| Ikony | React Icons (Feather) |
-| Discord | discord-rpc |
-
-## 🔧 Konfiguracja
-
-### Zmienne środowiskowe
-
-Utwórz plik `.env` z następującymi zmiennymi (opcjonalnie):
-
-```env
-# Apple Developer (opcjonalne, dla macOS notarization)
-APPLE_ID=your@apple.id
-APPLE_ID_PASSWORD=app-specific-password
-APPLE_TEAM_ID=TEAM_ID
-
-# GitHub Token (opcjonalne, dla auto-updater z prywatnymi repozytoriami)
-GH_TOKEN=your_github_token
-```
+<br />
 
 ## 📋 Komendy
 
 | Komenda | Opis |
-|---------|------|
-| `npm run dev` | Tryb deweloperski (hot reload) |
-| `npm run build` | Kompilacja TypeScript |
-| `npm run dist:win` | Buduj instalator Windows |
-| `npm run dist:linux` | Buduj paczki Linux |
-| `npm run dist:mac` | Buduj DMG dla macOS |
-| `npm run dist` | Buduj dla wszystkich platform |
+|:--------|:-----|
+| `npm run dev` | Tryb deweloperski z hot reload |
+| `npm run build` | Kompilacja TypeScript + Webpack |
+| `npm run start` | Uruchom zbudowaną aplikację |
+| `npm run dist:win` | Zbuduj instalator Windows |
+| `npm run dist:linux` | Zbuduj paczki Linux |
+| `npm run dist:mac` | Zbuduj DMG/ZIP macOS |
 | `npm run lint` | Sprawdź ESLint |
 | `npm run typecheck` | Sprawdź typy TypeScript |
 
+<br />
+
 ## 🔐 Bezpieczeństwo
 
-Ta aplikacja stosuje najlepsze praktyki bezpieczeństwa Electron:
+<table>
+<tr><td>
 
-- **Context Isolation** - Renderer nie ma bezpośredniego dostępu do API Node.js
-- **Sandbox** - Włączony sandbox dla procesów renderera
-- **contextBridge** - Bezpieczna ekspozycja API dla renderera
-- **Brak nodeIntegration** - Integracja Node.js wyłączona w rendererze
-- **Walidacja IPC** - Wszystkie wiadomości IPC są walidowane
-- **Bezpieczne pobieranie** - Weryfikacja hash dla pobranych plików
-- **Jedna instancja** - Zapobieganie wielu instancjom aplikacji
-- **Linki zewnętrzne** - Otwieranie w domyślnej przeglądarce systemowej
+**Model procesów Electron**
+
+```
+┌─────────────┐    contextBridge     ┌──────────────┐
+│  Renderer    │◄═══════════════════►│  Main Process │
+│  (sandbox)   │    IPC channels     │  (Node.js)    │
+│  No Node.js  │    validated msgs   │  Full access  │
+└─────────────┘                      └──────────────┘
+```
+
+</td></tr>
+</table>
+
+- ✅ **Context Isolation** — renderer nie ma dostępu do Node.js
+- ✅ **Sandbox** — włączony dla procesów renderera
+- ✅ **contextBridge** — jedyny interfejs komunikacji
+- ✅ **Brak nodeIntegration** — wyłączone w BrowserWindow
+- ✅ **Walidacja IPC** — wszystkie wiadomości sprawdzane w main
+- ✅ **Szyfrowanie tokenów** — DPAPI (Win) / Keychain (macOS) / libsecret (Linux)
+- ✅ **Hash verification** — weryfikacja integracji pobranych plików
+- ✅ **Single instance** — blokada wielokrotnego uruchomienia
+- ✅ **shell.openExternal** — bezpieczne otwieranie linków
 
 ### Publiczne klucze API
 
-Aplikacja używa następujących publicznych kluczy API, które mogą być bezpiecznie zawarte w kodzie:
+Aplikacja zawiera publiczne klucze API, które są bezpieczne do umieszczenia w kodzie:
 
-- **CurseForge API Key** - Publiczny klucz dla aplikacji desktopowych
-- **Microsoft Client ID** - Oficjalny publiczny Client ID Minecraft
-- **Discord Application ID** - Publiczny ID aplikacji Discord RPC
+| Klucz | Cel | Status |
+|:------|:----|:------:|
+| CurseForge API Key | Publiczny klucz dla aplikacji desktopowych | ✅ Publiczny |
+| Microsoft Client ID | Oficjalny Client ID Minecraft | ✅ Publiczny |
+| Discord Application ID | ID aplikacji Discord RPC | ✅ Publiczny |
 
-## 🌐 Obsługiwane API
+<br />
 
-- **Minecraft API** - Oficjalne API Mojang (wersje, assety)
-- **Fabric API** - Wersje loaderów i mappingi
-- **Forge API** - Wersje Forge z Maven
-- **NeoForge API** - Wersje NeoForge
-- **CurseForge API** - Wyszukiwanie i pobieranie modów i paczek modów
-- **Modrinth API** - Alternatywne źródło modów
+## 🌐 API
+
+| API | Endpoint | Zastosowanie |
+|:----|:---------|:-------------|
+| Minecraft | `launchermeta.mojang.com` | Wersje, assety, biblioteki |
+| Fabric | `meta.fabricmc.net` | Fabric loader |
+| Forge | `files.minecraftforge.net` | Forge installer |
+| NeoForge | `maven.neoforged.net` | NeoForge loader |
+| CurseForge | `api.curseforge.com` | Mody + paczki modów |
+| Modrinth | `api.modrinth.com` | Mody (alternatywa) |
+
+<br />
 
 ## 🌍 Tłumaczenia
 
-Launcher obsługuje wiele języków:
-
-- **Wbudowane**: Polski (pl), Angielski (en)
-- **Własne**: Dodaj własne pliki tłumaczeń
+| Język | Kod | Status |
+|:------|:---:|:------:|
+| 🇵🇱 Polski | `pl` | ✅ Wbudowany |
+| 🇬🇧 English | `en` | ✅ Wbudowany |
+| 🌐 Własny | `*` | 📝 Twórz własne! |
 
 ### Dodawanie własnego języka
 
-1. Utwórz plik JSON zgodny ze strukturą w `src/renderer/i18n/locales/en.json`
-2. Umieść go w:
-   - Windows: `%APPDATA%/MinecraftLauncher/languages/`
-   - macOS: `~/Library/Application Support/MinecraftLauncher/languages/`
-   - Linux: `~/.config/MinecraftLauncher/languages/`
+1. Skopiuj `src/renderer/i18n/locales/en.json` jako szablon
+2. Przetłumacz wartości (klucze zostaw bez zmian)
+3. Umieść plik w katalogu języków:
 
-Szczegóły w [docs/TRANSLATIONS.md](docs/TRANSLATIONS.md).
+| System | Ścieżka |
+|:-------|:--------|
+| Windows | `%APPDATA%/MinecraftLauncher/languages/` |
+| macOS | `~/Library/Application Support/MinecraftLauncher/languages/` |
+| Linux | `~/.config/MinecraftLauncher/languages/` |
+
+Szczegóły: [docs/TRANSLATIONS.md](docs/TRANSLATIONS.md)
+
+<br />
 
 ## 🐛 Znane problemy
 
-1. **Forge 1.17.x** - Może wymagać ręcznej instalacji Java 16+
-2. **macOS Notarization** - Wymaga konta Apple Developer
-3. **Linux AppImage** - Na niektórych dystrybucjach może wymagać `--no-sandbox`
+| Problem | Obejście |
+|:--------|:---------|
+| Forge 1.17.x wymaga Java 16+ | Zainstaluj odpowiednią wersję Java |
+| macOS ostrzeżenie o nieznanym deweloperze | Ustawienia → Prywatność → Otwórz mimo to |
+| Linux AppImage sandbox | Uruchom z `--no-sandbox` |
+
+<br />
 
 ## 🤝 Współpraca
 
-1. Forkuj repozytorium
-2. Utwórz branch (`git checkout -b feature/amazing-feature`)
-3. Commituj zmiany (`git commit -m 'Add amazing feature'`)
-4. Push do brancha (`git push origin feature/amazing-feature`)
-5. Otwórz Pull Request
+Wkład do projektu jest mile widziany!
+
+1. **Fork** repozytorium
+2. Utwórz branch: `git checkout -b feature/amazing-feature`
+3. Commituj: `git commit -m 'Add amazing feature'`
+4. Push: `git push origin feature/amazing-feature`
+5. Otwórz **Pull Request**
+
+<br />
 
 ## 📄 Licencja
 
-MIT License - patrz plik [LICENSE](LICENSE)
+Projekt wydany na licencji **MIT** — zobacz plik [LICENSE](LICENSE).
+
+<br />
 
 ## ⚠️ Zastrzeżenia
 
-- To jest **nieoficjalny** launcher Minecraft
-- Minecraft jest znakiem towarowym Mojang AB
-- Wymagana jest ważna licencja Minecraft Java Edition
-- Projekt nie jest powiązany z Mojang AB ani Microsoft
+> [!WARNING]
+> - To jest **nieoficjalny** launcher Minecraft
+> - Minecraft jest znakiem towarowym **Mojang AB**
+> - Wymagana jest ważna licencja **Minecraft Java Edition**
+> - Projekt nie jest powiązany z Mojang AB ani Microsoft
 
-## 📧 Kontakt
-
-- GitHub Issues: [Zgłoś problem](https://github.com/your-github-username/minecraft-launcher/issues)
+<br />
 
 ---
 
 <div align="center">
+
+  **[⬆ Powrót na górę](#mr_brodacz--client)**
+
   <sub>Stworzone z ❤️ dla społeczności Minecraft</sub>
+
+  <br />
+
+  [![GitHub Issues](https://img.shields.io/badge/Issues-Zgłoś_problem-red?style=flat-square&logo=github)](https://github.com/your-github-username/minecraft-launcher/issues)
+  [![GitHub Stars](https://img.shields.io/github/stars/your-github-username/minecraft-launcher?style=flat-square&logo=github)](https://github.com/your-github-username/minecraft-launcher)
+
 </div>
